@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Pizza Order</title>
+</head>
+    
+<body>
+    <div id="header">
+        <h1>Beep Boop Pizza</h1>
+        <img src="pizza.jpeg" alt="Our Pizza Is Delicious" height="100" width="100">
+        <h2>Best pizza either side of the Mississippi!</h2>
+        <hr>
+    </div>
+    <div id="main_content">
+        <form>
+        <p>Name <input type="text" name="full_name" autofocus></p>
+        <p>Phone <input type="text" name="phone_num"></p>
+        <p>Size <select name="size">
+                <option>Select Size</option>
+            <optgroup label="Traditional Crust">
+                <option value="10">Small ($10)</option>
+                <option value="13">Medium($13)</option>
+                <option value="16">Large($16)</option>
+            </optgroup>
+            <optgroup label="Gluten Free Crust">
+                <option value="12gf">Small ($12)</option>
+                <option value="15gf">Medium($15)</option>
+                <option value="19gf">Large($19)</option>
+            </optgroup>
+            <optgroup label="Thin Crust">
+                <option value="11tc">Small ($11)</option>
+                <option value="14tc">Medium($14)</option>
+                <option value="17tc">Large($17)</option>
+            </optgroup>      
+        </select></p>
+        <p>Toppings:</p>
+        <p><input type="checkbox" name="mushrooms" value="mushrooms"> Mushrooms </p>
+        <p><input type="checkbox" name="olives" value="olives"> Olives </p>
+        <p><input type="checkbox" name="sausage" value="sausage"> Sausage </p>
+        <p>Special Requests:</p>
+        <p><textarea name="comments" cols="30" rows="5"></textarea></p>
+        <p>Would you like to be added to our email list?</p>
+        <p><input type="radio" name="ad_list"> Yes /<input type="radio" name="ad_list"> No</p>
+        <p><input type="button" value="Submit my Order!" onClick="sendOrder()"><input type="reset" value="Restart Order"></p>  
+        </form><br><hr>
+    </div>
+    <div id="footer">
+        <h6>Address: 43 Flower Ave, Hoboken, NJ</h6>
+        <h6>Phone Number: 123-456-7890</h6>
+    </div> 
+</body>
+
+</html>

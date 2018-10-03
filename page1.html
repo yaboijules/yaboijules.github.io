@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>calculator</title>
+    <script>
+        var finish=false
+        var solution
+        // My understanding of the "this" opperator is that it references the object which it has selected when used. In this case, it is selecting the input button as the object (since it says "this" in the onclick attribute) and the copyButton(n) fucntion reconises the button as its "n" variable, since it is the object which the variable represents when called. As such, refering to the "n" variable in the function refers to the button. Thats why I can fetch the id of the specific button clicked.
+        
+        function copyButton(n)
+        {
+            //the .includes() method checks the array for a value, in this instance, the value of n.id. If the value is in the array, it returns true boolean value and 
+            if (finish == true) { 
+                if (["1","2","3","4","5","6","7","8","9","0","."].includes(n.id)) {
+                document.getElementById("calcBar").value=document.getElementById("calcBar").value;
+                } else {
+                document.getElementById("calcBar").value=solution+n.id;
+                finish=false;
+                }
+            } else {
+            document.getElementById("calcBar").value=document.getElementById("calcBar").value+n.id;
+            }
+            
+        }
+       
+        function calculate()
+        {
+            solution=eval(document.getElementById("calcBar").value);
+            document.getElementById("calcBar").value=
+                document.getElementById("calcBar").value+" = "+solution;
+            finish=true;
+        }
+ 
+    </script>
+    </head>
+    
+    <body>
+        Jules' Website | <a href="index.html">Homepage</a> -> Calculator <hr>
+        <form>
+    <p> <input readonly type="text" id="calcBar">
+        </p> 
+    <p> <input type="button" id ="7" value="7" style="height:40px;width:40px" onclick="copyButton(this)">
+        <input type="button" id ="8" value="8" style="height:40px;width:40px" onclick="copyButton(this)">
+        <input type="button" id ="9" value="9" style="height:40px;width:40px" onclick="copyButton(this)">
+        <input type="button" id =" + " value="+" style="height:40px;width:40px" onclick="copyButton(this)">
+        <input type="reset" value="CE" style="height:40px;width:40px" onclick="finish=false">
+        </p>
+    <p> <input type="button" id ="4" value="4" style="height:40px;width:40px" onclick="copyButton(this)">
+        <input type="button" id ="5" value="5" style="height:40px;width:40px" onclick="copyButton(this)">
+        <input type="button" id ="6" value="6" style="height:40px;width:40px" onclick="copyButton(this)">
+        <input type="button" id =" - " value="-" style="height:40px;width:40px" onclick="copyButton(this)">
+        </p>    
+    <p> <input type="button" id ="1" value="1" style="height:40px;width:40px" onclick="copyButton(this)">
+        <input type="button" id ="2" value="2" style="height:40px;width:40px" onclick="copyButton(this)">
+        <input type="button" id ="3" value="3" style="height:40px;width:40px" onclick="copyButton(this)">
+        <input type="button" id =" * " value="*" style="height:40px;width:40px" onclick="copyButton(this)">
+        </p>    
+    <p> <input type="button" id ="." value="." style="height:40px;width:40px" onclick="copyButton(this)">
+        <input type="button" id ="0" value="0" style="height:40px;width:84px" onclick="copyButton(this)">
+        <input type="button" id =" / " value="/" style="height:40px;width:40px" onclick="copyButton(this)">
+        <input type="button" value="=" style="height:40px;width:40px" onclick="calculate()">
+        </p> </form>
+        
+    </body>
+</html>

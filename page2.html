@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>rando</title>
+        <script>
+        var testVar=8;
+        var testTest;
+        console.log(testVar);
+            
+            
+            //typeof command outputs the type of variable as a string
+            //using back ticks (``, shares a button with ~) are called template literals. A string tat is a template literal prints exactly what it is. This allows you to use placeholders ${} which will add the value of the statement in the brackets into the string.
+        function testFn()
+            {
+                testTest = typeof testVar;
+                console.log(testTest);
+                alert(`The value testTest is a ${typeof testTest}.`);
+            }
+        
+            
+            
+            //an if else function can be replaced with this short hand. If the value before the question mark is true, it will run the command on the left of the colon. if its false, it will run the code on the right.
+        function replaceIf(){
+            document.getElementById("4box").value === "4" ? alert("NICE") : alert("WRONG");    
+        }
+        
+        
+        
+            //this function uses a for loop. it creates a variable i with a value of 0. multiplierList is an array with a number of objects in it. It checks the length and as long as i is less than the number of objects in the array, it will loop. After very loop, it will add 1 to i.
+            
+            //every loop, it checks if the 'i'th item in the array is checked. If that is true, it will make multiplier equal to the value of the 'i'th object in the multiplierlist array
+            
+            //getElementsByName gets all the elements with that name and puts them in a nodelist in the order that they are found. I think its like an array.
+            
+        function multiplyNumber() {
+            var multiplierList = document.getElementsByName("multiply");
+            var multiplier;
+            for(var i=0; i < multiplierList.length; i++) {
+                if(multiplierList[i].checked){
+                    multiplier=multiplierList[i].value
+                };
+            };
+            console.log(multiplier);
+            alert(eval(document.getElementById("timesBox").value * multiplier));   
+        }
+       
+        </script>   
+    </head>
+    
+    <body>
+        Jules' Website | <a href="index.html">Homepage</a> -> testing page <hr>
+    <input type="button" value="test" onclick="testFn()">
+    <p>What is 2+2? <input type="text" id="4box"> 
+    <input type="button" value="Am I right?" onclick="replaceIf()"></p><br>
+        
+        
+    <p><input type='text' placeholder ='enter a number' id='timesBox'>
+        <input type='button' value='Multiply' onclick='multiplyNumber()'>
+        <input type='radio' name="multiply" value="2"> x2 /
+        <input type='radio' name="multiply" value="4"> x4 /
+        <input type='radio' name="multiply" value="6"> x6 
+        </p>
+    </body>
+</html>

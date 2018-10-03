@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+    
+<head>
+    <meta charset="utf-8"/>
+    <title>jules' 2nd test page </title>
+    <script>
+    function yaYeet() 
+    {
+        alert("Yeet");
+    }
+    function printName()
+    {
+        alert("my name is jules"); 
+    }
+    function sqrtFive()
+    {
+        alert(Math.sqrt(25));
+    }
+        
+        
+    // Document targets the current document, aka this html file
+    // getElementById() lets you choose an element by its id attribute
+    // .value tells it to grab the value from the text field (?)
+    function printUsername()
+    {
+        alert("Your Username is "+document.getElementById("txtUsername").value);
+    }
+        
+        
+    // this function selects the same text box and gives it a value when run
+    function giveUsername()
+    {
+        document.getElementById("txtUsername").value = "bigboyjoey";
+    }
+    </script>
+</head>
+
+<body>
+    <h1>Javascript tests</h1>
+    <input type="button" value="yeet" onclick="yaYeet()" />
+    <!-- using the onclick attribute will allow you to invoke a function when the object is clicked on. In this case, it's a button, but i could also be on an image too -->
+    
+    <p>click on this to see my name:</p>
+    <img src="c9.jpg" height="100" width="100" onclick="printName()"/>
+    
+    <p><input type="button" value="Square Root of 25" onclick="sqrtFive()"/></p>
+    
+    <!-- placeholder attribute puts values in lighter text inside the text box -->
+    <input type="text" placeholder="username" size="20" id="txtUsername"/>
+    <input type="button" value="print your username" onclick="printUsername()"/>
+    <input type="button" value="suggested username" onclick="giveUsername()"/>
+    
+    
+    
+</body>
+
+</html>

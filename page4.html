@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>Rock Paper Scissors</title>
+        <script>
+    
+const getUserChoice = userInput => {
+  userInput = userInput.toLowerCase();
+  if (userInput === 'rock'||userInput ==='paper'||userInput === 'scissors'||userInput === 'bomb') {
+    return userInput;
+  	} else {
+    alert('This is not a valid choice.');
+  	}
+  }
+
+const getComputerChoice = () => {
+  switch (Math.floor(Math.random()*3)) {
+    case 0:
+      return 'rock';
+    case 1:
+      return 'paper';
+    case 2:
+      return 'scissors';  
+  }
+}
+
+const determineWinner = (userChoice, computerChoice) => {
+  if (userChoice === 'bomb') {
+    return 'user won';
+  }
+	if (userChoice === computerChoice) {
+    return 'result is a tie';
+  }
+	if(userChoice === 'rock') {
+    if(computerChoice === 'paper'){
+      return 'cpu won';
+    } else {
+      return 'user won';
+    }
+  }
+	if(userChoice === 'paper') {
+    if(computerChoice === 'scissors'){
+      return 'cpu won';
+    } else {
+      return 'user won';
+    }
+  }
+	if(userChoice === 'scissors') {
+    if(computerChoice === 'rock'){
+      return 'cpu won';
+    } else {
+      return 'user won';
+    }
+  }
+}
+
+
+function playGame() {
+    userChoice = getUserChoice(document.getElementById("userpick").value);
+    computerChoice = getComputerChoice();
+    console.log(userChoice);
+    console.log(computerChoice);
+    winText=determineWinner(userChoice,computerChoice);
+    if(userChoice){
+        alert(`The computer picked ${computerChoice}. The ${winText}.`);
+    }
+  
+}
+    
+</script>
+    </head>
+    <body>
+    Jules' Website | <a href="index.html">Homepage</a> -> Rock Paper Scissors <hr>
+    Rock, paper, or scissors?
+    <p><input type='text' id='userpick'> <input type='button' value='Go!' onclick='playGame()'></p>
+    </body>
+</html>

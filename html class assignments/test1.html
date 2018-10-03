@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>test1</title>
+</head>
+<body>
+    
+  <!--div divides the info for individual action on it-->
+  <div id="header">
+    <h1>Good ol' Pizza</h1>
+  </div>
+  <div id="tagline">
+    <h2>its pretty good, man</h2>
+  </div>
+  
+    
+  <div id="content">  
+  <!--<form groups all the inputs together so I can put the reset button on it-->
+  <form> 
+    <!-- webpage for form information https://www.w3schools.com/html/html_form_input_types.asp -->
+      
+    <!--input box, creates a box to enter text. <input/> doesnt have a closure tag. autofocus attribute sets the curser in this field when it's opened-->
+    <p>Name <input type="text" name="full_name" id="txtfn" autofocus></p>
+    
+    <!--password field, masks text thats typed-->
+    <p> Password <input type="password" name="psw"></p>
+    
+    <!--button that brings up a hex color selector when clicked -->
+    <p>Favorite color <input type="color" name="favcolor"></p>
+    
+    <!--brings up calendar to select a date-->
+    <p>Delivery Date <input type="date" name="order_date"></p>
+      
+    <!--time selection-->
+    <p>Delivery Time <input type="time" name="order_time"></p>
+      
+    <!--field to enter your email, can be validated on submission-->
+    <p> E-mail: <input type="email" name="email"></p>
+        
+    <!-- brings up button that lets user upload a file-->
+    <p>Give me free music: <input type="file" name="myfile"></p>
+      
+    <!-- number select, enter text, has arrows to change number, can define range with min and max atributes-->
+    <p>Year Born <input type="number" name="yearborn" min="1901" max="2018"></p>
+      
+    <!-- drop down menu, <optgroup> creates titles within the drop down menu-->
+    <p>Year Born <select name="yr_brn">
+            <option><!--putting a blank option creates space--> </option>
+        <optgroup label="90's">
+            <option value="1995">1995</option>
+            <option value="1996">1996</option>
+            <option value="1997">1997</option>
+            <option value="1998">1998</option>
+            <option value="1999">1999</option>
+        </optgroup>
+        <optgroup label="00's">
+            <option value="2000">2000</option>
+            <option value="2001">2001</option>
+            <option value="2002">2002</option>
+            <option value="2003">2003</option>
+        </optgroup>
+        </select></p>
+    
+    <!-- text box, it makes a text box-->
+    <p> Comments
+        <textarea name="comments" col="50" rows="5">
+        </textarea></p>
+    
+    <!-- checkboxes, they're checkboxes-->
+    <p>Toppings --
+        Pepperoni<input type="checkbox">
+        / Sausage <input type="checkbox">
+        / Pineapple <input type="checkbox"></p>
+      
+    <!-- radio select, "radio" type is the round ones where you can only select one at a time. For radio buttons, all selections in the group must have the same name attribute-->
+    <p>Crust --
+        Regular <input type="radio" name="crust">
+        / Thicc <input type="radio" name="crust">
+        / Gluten Free <input type="radio" name="crust"></p>
+      
+      
+    <!-- not sure what sumbit does yet. Value sets the text in the submit button-->
+    <!--<input type="submit" value="Order"> prof says not to use submit, but use a button instead-->
+    <input type="button" value="order" onclick="dostuff()">
+    <!-- resets all inputs inside the <form> tag that the reset is in-->
+    <input type="reset">
+  </form>       
+  </div>
+    
+  <div id="footer">
+    <h6>best pizza this side of the mississippi</h6>
+    <a href="#header">to top</a>
+  </div>
+</body>
+</html>
+
+    
+    
+    
+    
+    

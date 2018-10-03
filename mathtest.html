@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Math</title>
+        <script>
+           
+            
+            /*
+            function checkNumber(n) {
+                let num = Number(n);
+                console.log(num);
+                if(num) {
+                    console.log("yeet");
+                    return num;
+                } else {
+                    alert("That is not a number!");
+                }
+            } 
+            */
+            
+            function squareRoot() {
+                let x = Number(document.getElementById("numberbox").value);
+                if(x) {
+                   alert(Math.sqrt(x));
+                } else {
+                    alert("This is not a number!");
+                }
+            }
+        
+            function numCubed() {
+                let x = Number(document.getElementById("numberbox").value);
+                if(x) {
+                   alert(Math.pow(x,3));
+                } else {
+                    alert("This is not a number!");
+                }
+            }
+        
+            function timesPi() {
+                let x = Number(document.getElementById("numberbox").value);
+                if(x) {
+                   alert(Math.PI*x);
+                } else {
+                    alert("This is not a number!");
+                }
+            }        
+        
+        </script>
+      
+    </head>
+    
+    <body>
+        <p><input type='button' value='Square root of 10' onclick='alert(Math.sqrt(10))'>
+        <input type='button' value='2 Cubed' onclick='alert(Math.pow(2,3))'>
+        <input type='button' value='Random number between 1 and 20' onclick='alert(Math.floor((Math.random()*20)+1))'></p>
+        <hr>
+        
+        <p>x= <input type="text" id="numberbox"></p>
+        <p><input type="button" value="Square root of x" onclick="squareRoot()">
+        <input type="button" value="x cubed" onclick="numCubed()">
+        <input type="button" value="x times pi" onclick="timesPi()">
+        </p>
+    </body>
+</html>

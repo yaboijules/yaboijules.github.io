@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>magic eight ball</title>
+        <script>
+        function magicEightBall() {
+            var ballNum = Math.floor(Math.random() * 20);
+            switch(ballNum) {
+                case 0:
+                    alert("It is certain.");
+                    break;
+                case 1:
+                    alert("It is decidedly so.");
+                    break;
+                case 2:
+                    alert("Without a doubt.");
+                    break;
+                case 3:
+                    alert("Yes - definitely.");
+                    break;
+                case 4:
+                    alert("You may rely on it.");
+                    break;
+                case 5:
+                    alert("As I see it, yes.");
+                    break;
+                case 6:
+                    alert("Most likely.");
+                    break;
+                case 7:
+                    alert("Outlook good.");
+                    break;
+                case 8:
+                    alert("Yes.");
+                    break;
+                case 9:
+                    alert("Signs point to yes.");
+                    break;
+                case 10:
+                    alert("Reply hazy, try again.");
+                    break;
+                case 11:
+                    alert("Ask again later.");
+                    break;
+                case 12:
+                    alert("Better not tell you now.");
+                    break;
+                case 13:
+                    alert("Cannot predict now.");
+                    break;
+                case 14:
+                    alert("Concentrate and ask again.");
+                    break;
+                case 15:
+                    alert("Don't count on it.");
+                    break;
+                case 16:
+                    alert("My reply is no.");
+                    break;
+                case 17:
+                    alert("My sources say no.");
+                    break;
+                case 18:
+                    alert("Outlook not so good.");
+                    break;
+                case 19:
+                    alert("Very doubtful.");
+                    break;
+            }
+        }
+        </script>
+    </head>
+    
+    <body>
+    Jules' Website | <a href="index.html">Homepage</a> -> Magic Eight Ball <hr>
+    <p>Ask the Magic Eight Ball a question:</p>
+    <form>
+    <input type="text"> 
+    <input type="reset" value="Ask the Magic Eight Ball" onclick="magicEightBall()">
+    </form>
+    </body>
+</html>
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Pizza Order</title>
+    <script>
+        function sendOrder() {
+            var doughSize=document.getElementById("size").value;
+            console.log(doughSize);
+            var specialReq=document.getElementById("comments").value;
+            console.log(specialReq);
+            
+            //i created an empty array and the id of every checked box gets added to the array using var.push()
+            var toppingslist=document.getElementsByName("toppings");
+            var toppings=[]
+            for(var i=0;i<toppingslist.length;i++) {
+                if (toppingslist[i].checked) {
+                    toppings.push(toppingslist[i].id);
+                }
+            }
+            console.log(toppings);
+            
+            var userName=document.getElementById("first_name").value + " " + document.getElementById("last_name").value;
+            console.log(userName);
+            var phoneNumber=document.getElementById("phone_num").value;
+            console.log(phoneNumber);
+            
+            var yesornolist = document.getElementsByName("ad_list");
+            var yesorno
+            for(var i=0;i<yesornolist.length;i++) {
+                if (yesornolist[i].checked){
+                    yesorno=yesornolist[i].value;
+                }
+            }
+            if (yesorno==="yes") {
+                alert("Thank you for your order! You have been added to our mailing list.")
+            } else {
+                alert("Thank you for your order!")
+            }
+            
+        }
+    
+
+    </script>
+</head>
+    
+<body>
+    <div id="header">
+        <h1>Beep Boop Pizza</h1>
+        <img src="pizza.jpeg" alt="Our Pizza Is Delicious" height="100" width="100">
+        <h2>Best pizza either side of the Mississippi!</h2>
+        <hr>
+    </div>
+    <div id="main_content">
+        <form>
+        <h3>Order:</h3>
+        <p>Size <select id="size">
+                <option>Select Size</option>
+            <optgroup label="Traditional Crust">
+                <option value="10">Small ($10)</option>
+                <option value="13">Medium($13)</option>
+                <option value="16">Large($16)</option>
+            </optgroup>
+            <optgroup label="Gluten Free Crust">
+                <option value="12gf">Small ($12)</option>
+                <option value="15gf">Medium($15)</option>
+                <option value="19gf">Large($19)</option>
+            </optgroup>
+            <optgroup label="Thin Crust">
+                <option value="11tc">Small ($11)</option>
+                <option value="14tc">Medium($14)</option>
+                <option value="17tc">Large($17)</option>
+            </optgroup>
+            
+        </select></p>
+        <p>Toppings:</p>
+        <p><input type="checkbox" name= "toppings" id="mushrooms"> Mushrooms 
+            <input type="checkbox" name= "toppings" id="artichoke"> Artichoke
+            <input type="checkbox" name= "toppings" id="red_peppers"> Red Peppers</p>
+        <p><input type="checkbox" name= "toppings" id="olives"> Olives 
+            <input type="checkbox" name= "toppings" id="red_onions"> Red Onions
+            <input type="checkbox" name= "toppings" id="roasted_garlic"> Roasted Garlic</p>
+        <p><input type="checkbox" name= "toppings" id="sausage"> Sausage 
+            <input type="checkbox" name= "toppings" id="pepperoni"> Pepperoni
+            <input type="checkbox" name= "toppings" id="bbq_chicken"> BBQ Chicken</p>
+        <p><input type="checkbox" name= "toppings" id="shrimp"> Shrimp
+            <input type="checkbox" name= "toppings" id="anchovies"> Anchovies
+            <input type="checkbox" name= "toppings" id="prosciutto"> Prosciutto</p>
+            
+        <p>Special Requests:</p>
+        <p><textarea id="comments" cols="30" rows="5"></textarea></p>
+            
+        <h3>Personal Info:</h3>
+        <p>Frist Name <input type="text" id="first_name" required> </p>
+        <p>Last Name <input type="text" id="last_name" required> </p>
+        <p>Phone <input type="text" id="phone_num" required> </p>
+        <p>Email <input type="text" id="email" required> </p>
+        <p>Would you like to be added to our email list?</p>
+        <p><input type="radio" name="ad_list" value="yes" checked> Yes /<input type="radio" name="ad_list" value="no"> No</p>
+        <p><input type="button" value="Submit my Order!" onClick="sendOrder()"> <input type="reset" value="Restart Order"></p>  
+        </form><br><hr>
+    </div>
+    <div id="footer">
+        <h6>Address: 43 Flower Ave, Hoboken, NJ</h6>
+        <h6>Phone Number: 123-456-7890</h6>
+    </div> 
+</body>
+
+</html>

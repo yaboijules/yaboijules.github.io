@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Buttons</title>
+        <script>
+            function printName(n) {
+                document.getElementById('replaceSpot').innerHTML = `<${n}>${document.getElementById('namebox').value}<${n}>`   
+            }
+            
+        </script>   
+    </head>
+    
+    <body>
+        <div id="innerHTMLprac">
+        <p>What is your name?</p>
+        <p><input type='text' id='namebox'></p>
+        <p><input type='button' value= 'Print Name in <h1>' onclick='printName("h1")'>
+        <input type='button' value= 'Print Name in <h2>' onclick='printName("h2")'>
+        <input type='button' value= 'Print Name in <h3>' onclick='printName("h3")'></p>
+        <p><input type='button' value= 'Print Name in <h4>' onclick='printName("h4")'>
+        <input type='button' value= 'Print Name in <h5>' onclick='printName("h5")'>
+        <input type='button' value= 'Print Name in <h6>' onclick='printName("h6")'>
+        </p>
+        <p id='replaceSpot'>Your name will appear here!</p><hr>
+        </div>
+        
+        <div id="writePrac">
+        <p>This button will replace the page with your name.</p>
+        <p><input type='button' value='Replace page with your name' onclick="document.write(document.getElementById('namebox').value)">
+            </p>
+        </div>
+    
+    </body>
+</html>

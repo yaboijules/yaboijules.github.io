@@ -45,6 +45,26 @@
             alert(eval(document.getElementById("timesBox").value * multiplier));   
         }
        
+        let num = 50;
+            function lognumtestNOLET() {
+                const logNum = () => {
+                  num = 100; // Take note of this line of code
+                  console.log(num);
+                };
+
+                logNum(); // Prints 100
+                console.log(num); // Prints 100    
+            }
+            
+            function lognumtestLET() {
+                const logNum = () => {
+                  let num = 100; // Take note of this line of code
+                  console.log(num);
+                };
+
+                logNum(); // Prints 100
+                console.log(num); // Prints 50    
+            }
         </script>   
     </head>
     
@@ -60,6 +80,7 @@
         <input type='radio' name="multiply" value="2"> x2 /
         <input type='radio' name="multiply" value="4"> x4 /
         <input type='radio' name="multiply" value="6"> x6 
-        </p>
+        </p><br>
+        <input type="button" value='no let (will let global variable)' onclick='lognumtestNOLET()'> <input type="button" value='let (click me first, will set local variable!)' onclick='lognumtestLET()'>
     </body>
 </html>

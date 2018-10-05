@@ -5,6 +5,10 @@
         <title>cards</title>
         <link rel="icon" href="Ico-zilla-icon.png"> 
         <script>
+            var playerCards = [];
+            var deckValue= 52;
+            console.log(deckValue);
+            
             function drawCard() {
                 var theDraw = Math.ceil(Math.random()*52);
                 switch(theDraw) {
@@ -23,12 +27,27 @@
             }
         
             function addCard() {
-                document.getElementById('myHand').innerHTML = document.getElementById('myHand').innerHTML + drawCard()
+                if (deckValue === 0) {
+                    alert("The deck is empty.");
+                    return;
+                }
+                var newCard = drawCard();
+                console.log(newCard);
+                if (playerCards.includes(newCard)) {
+                        console.log("repeat");
+                        addCard();
+                        return;
+                };
+                deckValue -= 1;
+                console.log(deckValue);
+                playerCards.push(newCard);
+                document.getElementById('myHand').innerHTML = document.getElementById('myHand').innerHTML + newCard + " ";
             }
+            
         </script>
     </head>
     <body>
         <input type='button' value='draw a card' onclick='addCard()'>
-        <p id='myHand'>-</p>
+        <p id='myHand'></p>
     </body>
 </html>

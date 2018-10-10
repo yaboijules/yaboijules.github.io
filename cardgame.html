@@ -57,6 +57,17 @@
                 var i = hand.indexOf(card);
                 if (i !== -1){
                     hand.splice(i,1);
+                } else {
+                    alert('uh something fucked up');
+                    location.reload();
+                };
+                
+                i = drawnCards.indexOf(card);
+                if (i !== -1){
+                    drawnCards.splice(i,1);
+                } else {
+                    alert('uh something fucked up yeet');
+                    location.reload();
                 };
                 deckValue += 1;
                 
@@ -69,6 +80,9 @@
             
             function debug() {
                 console.log(pOneCards);
+                console.log(pTwoCards);
+                console.log(pThreeCards);
+                console.log(pFourCards);
             }
         </script>
     </head>

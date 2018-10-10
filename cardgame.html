@@ -12,6 +12,7 @@
             var drawnCards = [];
             var deckValue= 52;
             
+            //selects card at random.
             function drawCard() {
                 var theDraw = Math.ceil(Math.random()*52);
                 switch(theDraw) {
@@ -28,14 +29,14 @@
                     case 51: return "QD"; case 52: return "KD";
                 }
             }
-        
+            
+            //z is the html element where the imgs and buttons go, y is the var for the array with the player's cards in it, var as a string. window[] sets yy to the array that is a string when called (this is so the name of the argument can be used later, not just the value of the argument). drawCard() is run which returns a card, and then it is checked if it has been drawn yet. The drawn card is added to the master list of drawn cards and the player's hand and the value of the deck is increased by one. The image is then loaded in the hand of the player
             function addCard(z,y) {
                 if (deckValue === 0) {
                     alert("The deck is empty.");
                     return;
                 }
-                
-                var yy = window[y];
+            
                 var newCard = drawCard();
                 
                 if (drawnCards.includes(newCard)) {
@@ -45,6 +46,8 @@
                 
                 deckValue -= 1;
                 drawnCards.push(newCard);
+                
+                var yy = window[y];
                 yy.push(newCard);
 
                 document.getElementById(z).innerHTML = document.getElementById(z).innerHTML + 
@@ -53,6 +56,7 @@
                 document.getElementById(`${newCard}button`).setAttribute('onClick',`removeCard(${y},"${newCard}")`);
             }
             
+            //hand is the variable that holds the array which hold a player's cards. card is the card that is being deleted. these values are saved in the function call in the button created from addCard(). it then gets the index of the card to be removed from the player's hand array and the drawn cards array, and removes the value at that index. the deck value is increased. The card and button are then removed. the else statements are in case the card called isnt in the player's hand array, in which case an alert pops up.
             function removeCard(hand,card) {
                 var i = hand.indexOf(card);
                 if (i !== -1){

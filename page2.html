@@ -69,6 +69,32 @@
                 logNum(); // Prints 100
                 console.log(num); // Prints 50    
             }
+            
+            function drawTest() {
+                var drawing=" <pre>\
+                            _..._ <br>\
+                          .'     '.      _ <br>\
+                         /    .-\"\"-\\   _/ \\ <br>\
+                       .-|   /:.   |  |   | <br>\
+                       |  \\  |:.   /.-'-./ <br>\
+                       | .-'-;:__.'    =/ <br>\
+                       .'=  *=|NASA _.=' <br>\
+                      /   _.  |    ; <br>\
+                     ;-.-'|    \\   | <br>\
+                    /   | \\    _\\  _\\ <br>\
+                    \\__/'._;.  ==' ==\\ <br>\
+                             \\    \\   | <br>\
+                             /    /   / <br>\
+                             /-._/-._/ <br>\
+                      jgs    \\   `\\  \\ <br>\
+                              `-._/._/ <br>\
+                </pre>\
+                <input type='button' value='nice' onclick='alert(`nice`)'>";
+
+                console.log(drawing);
+                document.getElementById('drawing').innerHTML = drawing;
+   
+            }
         </script>   
     </head>
     
@@ -89,5 +115,29 @@
         
         
         <p><input type='button' value='yayeetmyguy' onclick='yaYeetMyGuy()'></p>
+        
+        <input type='button' value='draw' onclick='drawTest()'>
+        <p id='drawing'> </p>
+        
+        <!--
+        <pre>
+                                    _..._ 
+                                  .'     '.      _ 
+                                 /    .-""-\   _/ \ 
+                               .-|   /:.   |  |   | 
+                               |  \  |:.   /.-'-./ 
+                               | .-'-;:__.'    =/ 
+                               .'=  *=|NASA _.=' 
+                              /   _.  |    ; 
+                             ;-.-'|    \   | 
+                            /   | \    _\  _\ 
+                            \__/'._;.  ==' ==\ 
+                                     \    \   | 
+                                     /    /   / 
+                                     /-._/-._/ 
+                              jgs    \   `\  \ 
+                                      `-._/._/ 
+    </pre>
+        -->
     </body>
 </html>

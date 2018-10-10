@@ -5,48 +5,92 @@
         <title>cards</title>
         <link rel="icon" href="Ico-zilla-icon.png"> 
         <script>
-            var playerCards = [];
+            var pOneCards = [];
+            var pTwoCards = [];
+            var pThreeCards = [];
+            var pFourCards = [];
+            var drawnCards = [];
             var deckValue= 52;
             
             function drawCard() {
                 var theDraw = Math.ceil(Math.random()*52);
                 switch(theDraw) {
-                    case 1: return "1s"; case 2: return "2s"; case 3: return "3s"; case 4: return "4s"; case 5: return "5s";
-                    case 6: return "6s"; case 7: return "7s"; case 8: return "8s"; case 9: return "9s"; case 10: return "10s";
-                    case 11: return "js"; case 12: return "qs"; case 13: return "ks"; case 14: return "1c"; case 15: return "2c";
-                    case 16: return "3c"; case 17: return "4c"; case 18: return "5c"; case 19: return "6c"; case 20: return "7c";
-                    case 21: return "8c"; case 22: return "9c"; case 23: return "10c"; case 24: return "jc"; case 25: return "qc";
-                    case 26: return "kc"; case 27: return "1h"; case 28: return "2h"; case 29: return "3h"; case 30: return "4h";
-                    case 31: return "5h"; case 32: return "6h"; case 33: return "7h"; case 34: return "8h"; case 35: return "9h";
-                    case 36: return "10h"; case 37: return "jh"; case 38: return "qh"; case 39: return "kh"; case 40: return "1d";
-                    case 41: return "2d"; case 42: return "3d"; case 43: return "4d"; case 44: return "5d"; case 45: return "6d";
-                    case 46: return "7d"; case 47: return "8d"; case 48: return "9d"; case 49: return "10d"; case 50: return "jd";
-                    case 51: return "qd"; case 52: return "kd";
+                    case 1: return "AS"; case 2: return "2S"; case 3: return "3S"; case 4: return "4S"; case 5: return "5S";
+                    case 6: return "6S"; case 7: return "7S"; case 8: return "8S"; case 9: return "9S"; case 10: return "10S";
+                    case 11: return "JS"; case 12: return "QS"; case 13: return "KS"; case 14: return "AC"; case 15: return "2C";
+                    case 16: return "3C"; case 17: return "4C"; case 18: return "5C"; case 19: return "6C"; case 20: return "7C";
+                    case 21: return "8C"; case 22: return "9C"; case 23: return "10C"; case 24: return "JC"; case 25: return "QC";
+                    case 26: return "KC"; case 27: return "AH"; case 28: return "2H"; case 29: return "3H"; case 30: return "4H";
+                    case 31: return "5H"; case 32: return "6H"; case 33: return "7H"; case 34: return "8H"; case 35: return "9H";
+                    case 36: return "10H"; case 37: return "JH"; case 38: return "QH"; case 39: return "KH"; case 40: return "AD";
+                    case 41: return "2D"; case 42: return "3D"; case 43: return "4D"; case 44: return "5D"; case 45: return "6D";
+                    case 46: return "7D"; case 47: return "8D"; case 48: return "9D"; case 49: return "10D"; case 50: return "JD";
+                    case 51: return "QD"; case 52: return "KD";
                 }
             }
         
-            function addCard() {
+            function addCard(z,y) {
                 if (deckValue === 0) {
                     alert("The deck is empty.");
                     return;
                 }
+                
+                var yy = window[y];
                 var newCard = drawCard();
-                console.log(newCard);
-                if (playerCards.includes(newCard)) {
-                        console.log("repeat");
-                        addCard();
+                
+                if (drawnCards.includes(newCard)) {
+                        addCard(z,y);
                         return;
                 };
+                
                 deckValue -= 1;
-                console.log(deckValue);
-                playerCards.push(newCard);
-                document.getElementById('myHand').innerHTML = document.getElementById('myHand').innerHTML + newCard + " ";
+                drawnCards.push(newCard);
+                yy.push(newCard);
+
+                document.getElementById(z).innerHTML = document.getElementById(z).innerHTML + 
+                    `<img src='cards_png/${newCard}.png' style='width:78px;height:117' alt='${newCard}' id='${newCard}'>\
+                    <input type='button' value='x' id='${newCard}button'>`;
+                document.getElementById(`${newCard}button`).setAttribute('onClick',`removeCard(${y},"${newCard}")`);
             }
             
+            function removeCard(hand,card) {
+                var i = hand.indexOf(card);
+                if (i !== -1){
+                    hand.splice(i,1);
+                };
+                deckValue += 1;
+                
+                var cardElement = document.getElementById(card);
+                cardElement.parentNode.removeChild(cardElement);
+                
+                var buttonElement = document.getElementById(card+"button");
+                buttonElement.parentElement.removeChild(buttonElement);
+            }
+            
+            function debug() {
+                console.log(pOneCards);
+            }
         </script>
     </head>
     <body>
-        <input type='button' value='draw a card' onclick='addCard()'>
-        <p id='myHand'></p>
+        <input type='button' value='draw a card p1' onclick='addCard("pOneHand","pOneCards")'>
+        <p id='pOneHand'></p>
+        <input type='button' value='draw a card p2' onclick='addCard("pTwoHand","pTwoCards")'>
+        <p id='pTwoHand'></p>
+        <input type='button' value='draw a card p3' onclick='addCard("pThreeHand","pThreeCards",)'>
+        <p id='pThreeHand'></p>
+        <input type='button' value='draw a card p4' onclick='addCard("pFourHand","pFourCards")'>
+        <p id='pFourHand'></p>
+        <input type='button' value='debug' onclick='debug()'>
     </body>
 </html>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

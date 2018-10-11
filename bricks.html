@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <title>canvas</title>
+        <link rel="icon" href="Ico-zilla-icon.png">
+        <style>
+    	canvas { background: #eee; display: block; margin: 0 auto; }
+        </style>
+    </head>
+    <body>
+        Jules' Website | <a href="index.html">Homepage</a> -> Ball and Bricks <hr>
+        
+        <canvas id='myCanvas' width="800" height="600"></canvas>
+        <!-- script does not work when placed in the head of the document. -->
+        <script>
+            var canvas = document.getElementById('myCanvas');
+            var ctx = canvas.getContext('2d');
+            
+            var playing = false;
+            
+            var x = canvas.width/2;
+            var y = canvas.height-80;
+            var dx = 2;
+            var dy = -2;
+            var ballRadius = 30;
+            
+            var paddleHeight = 20;
+            var paddleWidth = 150;
+            var paddleX = (canvas.width-paddleWidth)/2;
+            
+            var rightPressed = false;
+            var leftPressed = false;
+            
+            var brickRowCount = 3;
+            var brickColumnCount = 5;
+            var brickWidth = 120;
+            var brickHeight = 30;
+            var brickPadding = 35;
+            var brickOffsetTop = 60;
+            var brickOffsetLeft = 30;
+            
+            var score = 0
+            
+            function drawStartText() {
+                ctx.font = '32px Arial';
+                ctx.fillStyle = 'black';
+                ctx.fillText('PRESS SPACE TO START', canvas.width/4+5, canvas.height/2)
+            };
+            
+            function drawStartText2() {
+                ctx.font = '32px Arial';
+                ctx.fillStyle = 'black';
+                ctx.fillText('use the arrow keys to move', canvas.width/4, canvas.height/2 + 40)
+            };
+            
+            function drawScore() {
+                ctx.font = "16px Arial";
+                ctx.fillStyle = 'black';
+                ctx.fillText('Score: '+score, 10, 30);
+            }
+            
+            //nested loop. bricks array is created, an empty array is created at the first index, and then filled with objects from the nested loop. each holds a value of {x:0,y:0}
+            var bricks = [];
+            for(var c=0; c<brickColumnCount; c++) {
+                bricks[c] = [];
+                for(var r=0; r<brickRowCount; r++) {
+                    bricks[c][r] = {x:0,y:0, status: 1};
+                }
+            }
+            
+            
+            
+            function drawBricks() {
+                for(var c=0; c<brickColumnCount; c++) {
+                    for(var r=0; r<brickRowCount; r++) {
+                        //only draws bricks if their status is 1
+                        if(bricks[c][r].status === 1){    
+                            //bricks[c][r] has a value that is a coordinate. The .x and .y change the x and y values of the coordiate, giving each brick in the array a unique value.
+                            var brickX = (c*(brickWidth+brickPadding))+brickOffsetLeft;
+                            var brickY = (r*(brickHeight+brickPadding))+brickOffsetTop;
+                            bricks[c][r].x = brickX
+                            bricks[c][r].y = brickY
+                            ctx.beginPath();
+                            ctx.rect(brickX, brickY, brickWidth, brickHeight);
+                            ctx.fillStyle = 'red';
+                            ctx.fill();
+                            ctx.closePath();
+                        }
+                    }
+                }
+            }
+            
+            //draws the ball. arc rotation starts at a value, based on the radical, one circle is 2PI around. starting at 0 (right side) and goes clockwise until it hits 2PI (also right side)
+            function drawBall() {
+                ctx.beginPath();
+                ctx.arc(x,y,ballRadius,0,2*Math.PI);
+                ctx.fillStyle="green";
+                ctx.fill();
+                ctx.closePath();
+            }
+            
+            //draws the paddle
+            function drawPaddle() {
+                ctx.beginPath();
+                ctx.rect(paddleX, canvas.height-paddleHeight-5, paddleWidth, paddleHeight);
+                ctx.fillStyle = "red";
+                ctx.fill();
+                ctx.closePath();
+            }
+            
+            //clears the canvas and creates the ball again. alters x and y  vars, which are also the position of the ball. also checks if the position of the ball hits the edges of the canvas, if they do, the dy and dx values which control the direction of travel, are made negative/positive to change direction.
+            function draw() {
+                ctx.clearRect(0,0,canvas.width,canvas.height);
+                
+                drawBall();
+                //reflects if it hits the top
+                if(y + dy < 0+ballRadius) {
+                    dy = -dy;
+                //reflects off the bottom if the paddle is under the center of the ball. otherwise, its game over.    
+                } else if(y + dy > canvas.height-ballRadius-paddleHeight) {
+                    if(x > paddleX && x < paddleX + paddleWidth) {
+                        dy= -dy;
+                    } else {  
+                    alert('game over');
+                    document.location.reload();   
+                    }
+                }
+                //reflects ball off of walls
+                if(x + dx < 0+ballRadius || x + dx > canvas.width-ballRadius) {
+                    dx = -dx;
+                };
+                x += dx;
+                y += dy;
+                
+                drawPaddle();
+                if(rightPressed && paddleX < canvas.width-paddleWidth - 5) {
+                    paddleX += 7;
+                };
+                if(leftPressed && paddleX > 5) {
+                    paddleX -= 7;
+                };
+                
+                drawBricks();
+                
+                collisionDetection();
+                
+                drawScore();
+                
+                if(!playing) {
+                    drawStartText();
+                    drawStartText2();
+                }
+                
+                
+            }
+            
+            //listens for keydown and key up event, reports the key pressed as the argument in the keyxhandler function
+            document.addEventListener('keydown', keyDownHandler, false);
+            document.addEventListener('keyup', keyUpHandler, false);
+            
+            //checks the keycode of the button pressed, if its left or right arrow key, the pressed variables change
+            function keyDownHandler(key) {
+                if(key.keyCode === 39) {
+                    rightPressed = true;
+                } else if (key.keyCode === 37) {
+                    leftPressed = true;
+                } else if (key.keyCode === 32) {
+                    play();
+                }  
+            }
+            
+            function keyUpHandler(key) {
+                if(key.keyCode === 39) {
+                    rightPressed = false;
+                } else if(key.keyCode === 37) {
+                    leftPressed = false;
+                }   
+            }
+            
+            //checks every frame if the ball is in contact with any of the bricks
+            function collisionDetection() {
+                for(var c=0; c<brickColumnCount; c++) {
+                    for(var r=0; r<brickRowCount; r++) {
+                        var b = bricks[c][r];
+                        //will only colide with bricks that have a status of 1
+                        if(b.status === 1) {
+                            if(x > b.x && x < b.x+brickWidth && y > b.y && y < b.y+brickHeight+ballRadius) {
+                                dy = -dy;
+                                //sets status 0, drawBricks() doesnt draw bricks with a status of 0
+                                b.status = 0; 
+                                score++;
+                                if(score == brickRowCount*brickColumnCount) {
+                                    alert('you win!');
+                                    document.location.reload();
+                                }      
+                            }
+                //all bricks still exist, but once hit, they're not drawn and aren't effected by collision
+                        }
+                    }
+                }
+            }
+                
+            draw();
+            
+            function play() {
+                draw();
+                requestAnimationFrame(play);
+                playing = true;
+            }
+            
+            
+        </script> 
+        <br>
+    </body>
+</html> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

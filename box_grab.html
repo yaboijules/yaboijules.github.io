@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <title>canvas</title>
+        <link rel="icon" href="Ico-zilla-icon.png">
+        <style>
+    	canvas { background: #eee; display: block; margin: 0 auto; }
+        </style>
+    </head>
+    <body>
+        Jules' Website | <a href="index.html">Homepage</a> -> Box Grab <hr>
+        
+        <canvas id='myCanvas' width="800" height="600"></canvas>
+        <script>
+            var canvas = document.getElementById('myCanvas');
+            var ctx = canvas.getContext('2d');
+            
+            var playerWidth = 50;
+            var playerHeight = 50;
+            var playerx = 700;
+            var playery = 100;
+            
+            var boxWidth = 30;
+            var boxHeight = 30;
+            var boxx = 600;
+            var boxy = 450;
+            
+            var spacePress = false;
+            var leftPress = false;
+            var rightPress = false;
+            var upPress = false;
+            var downPress = false;
+            
+            function drawPlayer(){
+                ctx.beginPath();
+                ctx.rect(playerx,playery,playerWidth,playerHeight);
+                ctx.fillStyle = "red";
+                ctx.fill();
+                ctx.closePath();
+            }
+            
+            function drawBox(){
+                ctx.beginPath();
+                ctx.rect(boxx,boxy,boxHeight,boxHeight);
+                ctx.fillStyle = "blue";
+                ctx.fill();
+                ctx.closePath();
+                ctx.moveTo(boxx, boxy);
+                ctx.lineTo(boxx+boxWidth, boxy+boxHeight);
+                ctx.strokeStyle = "yellow";
+                ctx.stroke();
+                ctx.moveTo(boxx, boxy+boxHeight);
+                ctx.lineTo(boxx+boxWidth, boxy);
+                ctx.strokeStyle = 'yellow';
+                ctx.stroke();
+            }
+            
+            function draw() {
+                ctx.clearRect(0,0,canvas.width,canvas.height);
+                
+                //run before the movement to prevent movement from happening if necissary
+                playerBoxCollision();
+               
+               
+                
+               //movement and colission with walls
+                if(leftPress && playerx>0) {
+                    playerx -= 2;
+                };
+                if(rightPress && playerx + playerWidth < canvas.width ) {
+                    playerx += 2;
+                };
+                if(upPress && playery > 0 ) {
+                    playery -= 2;
+                };
+                if(downPress && playery + playerHeight < canvas.height) {
+                    playery += 2;
+                };
+            
+                drawPlayer();
+                
+                drawBox();
+            }
+            
+            //sets framerate and runs the function
+            setInterval(draw,10);
+             
+            //key detection
+            document.addEventListener('keyup', keyUpCheck);
+            document.addEventListener('keydown', keyDownCheck);
+            
+            function keyDownCheck(key) {
+                switch(key.keyCode) {
+                    case 32:
+                        spacePress = true;
+                        return;
+                    case 37:
+                        leftPress = true;
+                        return;
+                    case 38:
+                        upPress = true;
+                        return;
+                    case 39:
+                        rightPress = true;
+                        return;
+                    case 40:
+                        downPress = true;
+                        return;
+                }
+            }
+                
+            function keyUpCheck(key) {
+                switch(key.keyCode) {
+                        case 32:
+                        spacePress = false;
+                        return;
+                    case 37:
+                        leftPress = false;
+                        return;
+                    case 38:
+                        upPress = false;
+                        return;
+                    case 39:
+                        rightPress = false;
+                        return;
+                    case 40:
+                        downPress = false;
+                        return;
+                }
+            }
+            
+            function playerBoxCollision() {
+                if(playerx+playerWidth >= boxx && playery+playerHeight > boxy && playery < boxy+boxHeight) {
+                    if(!(playerx >= boxx+boxWidth)){
+                        rightPress = false;
+                    }
+                }
+                if(playerx <= boxx+boxWidth && playery < boxy+boxHeight && playery+playerHeight > boxy) {
+                    if(!(playerx+playerWidth <= boxx)) {
+                        leftPress = false;
+                    }
+                }
+                if(playery <= boxy+boxHeight && playerx < boxx+boxWidth && playerx+playerWidth > boxx) {
+                    if(!(playery+playerHeight <= boxy)) {
+                        upPress = false;
+                    }
+                }
+                if(playery+playerHeight >= boxy && playerx < boxx+boxHeight && playerx+playerWidth > boxx) {
+                    if(!(playery >= boxy+boxHeight)) {
+                        downPress = false;
+                    }
+                }
+            }
+        </script>
+        
+           
+        
+        <script>
+        var test
+        
+        document.addEventListener('keydown', keylistener)
+        
+        function keylistener(key) {
+            test = key
+        
+        }
+        
+        </script>
+        <br><input type='button' value='key button test' onclick='console.log(test)'>
+    </body>
+</html>

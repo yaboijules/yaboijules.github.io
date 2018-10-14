@@ -32,6 +32,9 @@
             var upPress = false;
             var downPress = false;
             
+            var collision = false;
+            var boxGrabbed = false;
+            
             function drawPlayer(){
                 ctx.beginPath();
                 ctx.rect(playerx,playery,playerWidth,playerHeight);
@@ -56,13 +59,24 @@
                 ctx.stroke();
             }
             
+            function debugText() {
+                ctx.font = "10px Arial";
+                ctx.fillText("space press " + spacePress,10,10);
+                ctx.fillText("left press " +leftPress,10,25);
+                ctx.fillText("up press " +upPress,10,40);
+                ctx.fillText("right press " +rightPress,10,55);
+                ctx.fillText("down press " +downPress,10,70);
+                ctx.fillText("collision " +collision,10,85);
+            }
+            
             function draw() {
                 ctx.clearRect(0,0,canvas.width,canvas.height);
                 
                 //run before the movement to prevent movement from happening if necissary
+                //collision only prevents movement if the box is not grabbed
+                if (!boxGrabbed) {
                 playerBoxCollision();
-               
-               
+                }
                 
                //movement and colission with walls
                 if(leftPress && playerx>0) {
@@ -77,20 +91,32 @@
                 if(downPress && playery + playerHeight < canvas.height) {
                     playery += 2;
                 };
-            
                 drawPlayer();
                 
+                //if collision is true and space is pressed, the box will be grabbed.
+                //this function also moves the box when it is grabbed state
+                boxGrab();
+                
                 drawBox();
+                
+                //makes text in the top left
+                debugText();
             }
+            
             
             //sets framerate and runs the function
             setInterval(draw,10);
-             
+            
+            
+            
+            
+            
             //key detection
             document.addEventListener('keyup', keyUpCheck);
             document.addEventListener('keydown', keyDownCheck);
             
             function keyDownCheck(key) {
+                console.log(key);
                 switch(key.keyCode) {
                     case 32:
                         spacePress = true;
@@ -131,30 +157,50 @@
             }
             
             function playerBoxCollision() {
+                collision = false;
+                
                 if(playerx+playerWidth >= boxx && playery+playerHeight > boxy && playery < boxy+boxHeight) {
                     if(!(playerx >= boxx+boxWidth)){
                         rightPress = false;
+                        collision = true;
                     }
                 }
                 if(playerx <= boxx+boxWidth && playery < boxy+boxHeight && playery+playerHeight > boxy) {
                     if(!(playerx+playerWidth <= boxx)) {
                         leftPress = false;
+                        collision = true;
                     }
                 }
                 if(playery <= boxy+boxHeight && playerx < boxx+boxWidth && playerx+playerWidth > boxx) {
                     if(!(playery+playerHeight <= boxy)) {
                         upPress = false;
+                        collision = true;
                     }
                 }
                 if(playery+playerHeight >= boxy && playerx < boxx+boxHeight && playerx+playerWidth > boxx) {
                     if(!(playery >= boxy+boxHeight)) {
                         downPress = false;
+                        collision = true;
                     }
                 }
             }
+            
+            function boxGrab() {
+                if(!boxGrabbed && collision && spacePress) {
+                    spacePress = false;
+                    boxGrabbed = true;
+                }
+                if(boxGrabbed) {
+                    boxx = playerx;
+                    boxy = playery;
+                }
+                if(boxGrabbed && spacePress) {
+                    spacePress = false;
+                    boxx = playerx-boxWidth;
+                    boxGrabbed = false;
+                }
+            }
         </script>
-        
-           
         
         <script>
         var test

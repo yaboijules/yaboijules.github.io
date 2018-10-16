@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>Currency Converter</title>
+        <script>
+            function convert(currency) {
+                //gets user input
+                var usd = Number(document.getElementById('input').value);
+                console.log(usd)
+                
+                //leaves the function if the user input is not a number, 0, or negative
+                if (!usd || usd < 0) {
+                    alert('Please enter a number above 0!');
+                    return;
+                }
+                
+                //decides which conversion to do based on the currency called in the function
+                switch(currency) {
+                    case "EUR":
+                        var output = usd * .76;
+                        break;
+                    case "GBP":
+                        var output = usd * .62;
+                        break;
+                    case "MXN":
+                        var output = usd * 13.23;
+                        break;
+                }
+                
+                //rounds value to two decimal points and converts to string
+                output = output.toFixed(2);
+                
+                //puts values in document
+                document.getElementById('result').innerHTML="For "+usd+" USD, you will get "+output+" "+currency+"."
+            }
+        
+        </script>
+    </head>
+    <body>
+        <div id='header'>
+            <h1>Currency Converter</h1>
+            <img src='euro.jpeg' alt='euro' width="90" height="75">
+            <img src='pounds.jpeg' alt='pounds' width="133" height="75">
+            <img src='pesos.png' alt='pesos' width="116" height="75">
+            <hr>
+        </div>
+        <div id='body'>
+            <p>Convert from USD:</p>
+            <p><input type='text' id='input' placeholder='Value in USD'></p>
+            <input type='button' value='Convert to Euro' onclick='convert("EUR")'>
+            <input type='button' value='Convert to Pounds' onclick='convert("GBP")'>
+            <input type='button' value='Convert to Pesos' onclick='convert("MXN")'>
+            <p id='result'>Your conversion will appear here.</p>
+        </div>
+    </body>
+</html>

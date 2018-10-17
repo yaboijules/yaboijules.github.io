@@ -73,6 +73,8 @@
                 ctx.fillText("right press " +rightPress,10,55);
                 ctx.fillText("down press " +downPress,10,70);
                 ctx.fillText("collision " +collision,10,85);
+                ctx.fillText("box grab " +boxGrabbed,10,100);
+                ctx.fillText("rotation " +playerRotation,10,115);
             }
             
             
@@ -86,32 +88,31 @@
                 //movement and colission with walls
                 if(leftPress && playerx>0) {
                     playerx -= 2;
-                    playerRotation=270;
-                    
+                    playerRotation=270; 
                 };
-                if(rightPress && playerx + playerImg.width < canvas.width ) {
+                if(rightPress && playerx + playerImg.width < canvas.width) {
                     playerx += 2;
-                    playerRotation=90;
-                    
+                    playerRotation=90;   
                 };
-                if(upPress && playery > 0 ) {
+                if(upPress && playery > 0) {
                     playery -= 2;
-                    playerRotation=0;
-                   
+                    playerRotation=0;   
                 };
                 if(downPress && playery + playerImg.height < canvas.height) {
                     playery += 2;
-                    playerRotation=180;
-                  
+                    playerRotation=180; 
                 };
                 
                 drawPlayer(playerRotation);
                 
+                //placed before drawbox() since it corrects box position
+                boxGrab();
+                
                 drawBox();
                 
-                //debugText();
+                debugText();
                 
-                boxGrab();
+                
             }
             
             setInterval(draw,10);
@@ -141,7 +142,7 @@
             
             function keyUpChecker(key) {
                 switch(key.keyCode) {
-                        case 32:
+                    case 32:
                         spacePress = false;
                         return;
                     case 37:
@@ -197,13 +198,42 @@
                     boxGrabbed = true;
                 }
                 if(boxGrabbed) {
-                    boxx = playerx;
-                    boxy = playery;
+                    switch(playerRotation) {
+                        case 0:
+                            boxx = (playerx+(playerImg.width/2)-(boxWidth/2));
+                            boxy = (playery-boxHeight/2);
+                            break;
+                        case 90:
+                            boxx = (playerx + playerImg.width - (boxWidth/2));
+                            boxy = (playery + playerImg.height/2 - boxHeight/2);
+                            break;
+                        case 180:
+                            boxx = (playerx+(playerImg.width/2)-(boxWidth/2));
+                            boxy = (playery+playerImg.height-boxHeight/2);
+                            break;
+                        case 270:
+                            boxx = (playerx - (boxWidth/2));
+                            boxy = (playery + playerImg.height/2 - boxHeight/2);
+                            break;
+                    }
                 }
                 if(boxGrabbed && spacePress) {
                     spacePress = false;
-                    boxx = playerx-boxWidth;
                     boxGrabbed = false;
+                    switch(playerRotation) {
+                        case 0:
+                            boxy=playery-boxHeight;
+                            break;
+                        case 90:
+                            boxx=playerx+playerImg.width;
+                            break;
+                        case 180:
+                            boxy=playery+playerImg.height;
+                            break;
+                        case 270:
+                            boxx=playerx-boxWidth;
+                            break;
+                    }
                 }
             }
         </script>

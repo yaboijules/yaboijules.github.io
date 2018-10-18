@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>css tests</title>
+        <style>
+            body {
+                background-color: floralwhite;
+            }
+            
+            .topnav {
+                /*creates border around topnav class div*/
+                border:2px solid black;
+                background-color:lightgoldenrodyellow;
+                /*sets width and height of the border and area*/
+                width: 930px;
+                height:38px;
+                /*makes the div allign center*/
+                margin:auto;
+                margin-top:5px;
+            }
+            
+            .topnav a {
+                color: black;
+                /*alligns text to the left*/
+                float:left;
+                /*sets padding around just the a tag objects*/
+                padding: 10px 10px;
+                /*gets rid of the line under the link*/
+                text-decoration: none;
+            }
+            
+            .topnav a:hover {
+                background-color: dimgray;
+                color:snow;
+            }
+            
+            /*https://www.webucator.com/how-to/how-create-fixed-width-layout-with-css.cfm*/
+            /*setting the row to being center will allow the columns to be insided a center parent container*/
+            .row {
+                /*slightly wider to account for border padding*/
+                width:934px;
+                margin:auto;
+                height:740px;
+            }
+            .column.left {
+                width:651px;
+                float:left;
+                margin-top:5px;
+                margin-right:5px;
+                background-color:lightgoldenrodyellow;
+                padding: 10px;
+                border: 2px solid black;
+            }
+            .column.right {
+                margin-top:5px;
+                width:230px;
+                float:left;
+                background-color:lightgoldenrodyellow;
+                padding: 10px;
+                border: 2px solid black;
+            }
+            
+            /*idk how this works yet, i just know it makes the columns work*/
+            .row:after {
+                content: "";
+                display: table;
+                clear:both;
+            }
+            
+            #header {
+                border:2px solid black;
+                width:930px;
+                height:200px;
+                background-image:url("neopetsback.png");
+                text-align: center;
+                margin:auto;
+            }
+            
+            #footer {
+                border:2px solid black;
+                width:930px;
+                height:60px;
+                background-image:url("neopetsback.png");
+                text-align: center;
+                margin:auto;
+                margin-top:5px;
+            }
+            
+            .yeet {
+                color: blue;
+            }
+            
+            #yeet {
+                color: yellow;
+            }
+        </style>
+    </head>
+    
+    <body>
+        <div id='header'>
+            This is my header
+        </div>
+        <div class='topnav'>
+            <a href="#">Link</a>
+            <a href="#">Link</a>
+            <a href="#">Link</a>
+            <a href="#">Link</a>
+        </div>
+        <div class='row'>
+            <div class='column left'>
+                    <p class='yeet'>line</p>
+                    <p id='yeet'>line</p>
+                    <p class='yeet'>line</p>
+                <p>need to fix so this extends all the way down to the footer and moves the footer if it extends further. both columns must also be the same length</p>
+                    
+            </div>
+            <div class='column right'>
+                    <p class='yeet'>line</p>
+                    <p id='yeet'>line</p>
+                    <p class='yeet'>line</p>
+                    <p id='yeet'>line</p>
+                    <p class='yeet'>line</p>
+            </div>
+        </div>
+        <div id='footer'>
+            This is my footer
+            <br>
+        </div>
+    
+    </body>
+</html>

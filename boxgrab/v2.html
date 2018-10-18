@@ -27,6 +27,11 @@
             var boxx = 100;
             var boxy = 200;
             
+            var goalX = 400;
+            var goalY = 300;
+            var goalWidth = 100;
+            var goalHeight = 80;
+            
             var spacePress = false;
             var leftPress = false;
             var rightPress = false;
@@ -65,6 +70,14 @@
                 ctx.stroke();
             }
             
+            function drawGoal() {
+                ctx.beginPath();
+                ctx.rect(goalX, goalY, goalWidth, goalHeight);
+                ctx.strokeStyle='green';
+                ctx.stroke();
+                ctx.closePath();
+            }
+            
             function debugText() {
                 ctx.font = "10px Arial";
                 ctx.fillText("space press " + spacePress,10,10);
@@ -77,9 +90,12 @@
                 ctx.fillText("rotation " +playerRotation,10,115);
             }
             
-            
+ //-------          
             function draw() {
                 ctx.clearRect(0,0,canvas.width,canvas.height);
+                
+                //placed first so it has things drawn over it.
+                drawGoal();
                 
                 if (!boxGrabbed) {
                 playerBoxCollision();
@@ -112,9 +128,9 @@
                 
                 debugText();
                 
-                
+                winCondition();
             }
-            
+//---------         
             setInterval(draw,10);
             
             document.addEventListener('keydown',keyDownChecker);
@@ -192,7 +208,7 @@
                 }
             }
             
-             function boxGrab() {
+            function boxGrab() {
                 if(!boxGrabbed && collision && spacePress) {
                     spacePress = false;
                     boxGrabbed = true;
@@ -234,6 +250,15 @@
                             boxx=playerx-boxWidth;
                             break;
                     }
+                }
+            }
+            
+            function winCondition(){
+                if(!boxGrabbed && (boxx+boxWidth/2 > goalX) && (boxx+boxWidth/2 < goalX+goalWidth) && (boxy+boxHeight/2 > goalY) && (boxy < goalY+goalHeight)) {
+                    ctx.font = "20px Arial";
+                    ctx.fillStyle="black";
+                    ctx.fillText("success",boxx-17,boxy-30);
+                    
                 }
             }
         </script>

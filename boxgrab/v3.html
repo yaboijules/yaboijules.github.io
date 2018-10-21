@@ -39,15 +39,18 @@
             var upPress = false;
             var downPress = false;
             
+            var envCollision = false;
             var collision = false;
             var boxGrabbed = false;
             var win = false;
             var winHold = false;
+            var dead = false;
+            var deadHold = false;
             
             //levelNumber[0] is level info: level name, playerx, playery, playerRotation, boxx, boxy, goalX, goalY, goalWidth, goalHeight, time, next level 
-            var levelOne = [['One',600,400,0,120,200,620,170,100,80,'time',"levelTwo"],[1,1,1,1,1,1,1,1,1,1,1],[1,0,0,1,0,1,0,0,0,0,1],[1,0,0,1,0,0,0,0,0,0,1],[1,0,0,0,0,1,0,0,0,0,1],[1,0,0,1,0,1,0,0,0,0,1],[1,0,0,1,0,1,0,0,0,0,1],[1,1,1,1,1,1,1,1,1,1,1]];
-            var levelTwo = [['Two',650,430,0,100,175,85,310,80,205,'time',"levelThree"],[1,1,1,1,1,1,1,1,1,1,1],[1,0,0,0,0,0,0,0,0,0,1],[1,1,1,1,1,1,1,0,1,1,1],[1,0,0,0,0,0,0,0,0,0,1],[1,0,0,0,0,0,0,1,0,0,1],[1,0,0,0,0,0,0,1,0,0,1],[1,1,1,1,1,1,1,1,1,1,1]];
-            var levelThree = [['Three',690,315,270,400,320,530,275,80,120,'time',"levelOne"],[1,1,1,1,1,1,1,1,1,1,1],[1,0,0,0,0,0,0,0,0,0,1],[1,0,1,1,1,1,1,0,0,0,1],[1,0,0,0,0,0,1,0,0,0,1],[1,0,1,1,1,1,1,0,0,0,1],[1,0,0,0,0,0,0,0,0,0,1],[1,1,1,1,1,1,1,1,1,1,1]];
+            var levelOne = [['1',600,400,0,120,200,620,170,100,80,'time',"levelTwo"],[1,1,1,1,1,1,1,1,1,1,1],[1,0,0,2,0,2,0,0,0,0,1],[1,0,0,2,0,0,0,0,0,0,1],[1,0,0,0,0,2,0,0,0,0,1],[1,0,0,2,0,2,0,0,0,0,1],[1,0,0,2,0,2,0,0,0,0,1],[1,1,1,1,1,1,1,1,1,1,1]];
+            var levelTwo = [['2',650,430,0,100,175,85,310,80,205,'time',"levelThree"],[1,1,1,1,1,1,1,1,1,1,1],[1,0,0,0,0,0,0,0,0,0,1],[1,2,2,2,2,2,2,0,2,2,1],[1,0,0,0,0,0,0,0,0,0,1],[1,0,0,0,0,0,0,2,0,0,1],[1,0,0,0,0,0,0,2,0,0,1],[1,1,1,1,1,1,1,1,1,1,1]];
+            var levelThree = [['3',690,315,270,400,320,530,275,80,120,'time',"levelOne"],[1,1,1,1,1,1,1,1,1,1,1],[1,0,0,0,0,0,0,0,0,0,1],[1,0,2,2,2,2,2,0,0,0,1],[1,0,0,0,0,0,2,0,0,0,1],[1,0,2,2,2,2,2,0,0,0,1],[1,0,0,0,0,0,0,0,0,0,1],[1,1,1,1,1,1,1,1,1,1,1]];
             
             var currentLvl = levelOne;
             
@@ -61,6 +64,26 @@
             }
             playerImg.onload = drawPlayer(playerRotation);
             playerImg.src = "player.png";
+            
+            function playerMvmt() {
+                if(leftPress && playerx>0 && !rightPress && !downPress && !upPress) {
+                    playerx -= 1;
+                    playerRotation=270; 
+                };
+                if(rightPress && playerx + playerImg.width < canvas.width && !leftPress && !downPress && !upPress) {
+                    playerx += 1;
+                    playerRotation=90;   
+                };
+                if(upPress && playery > 0 && !rightPress && !downPress && !leftPress) {
+                    playery -= 1;
+                    playerRotation=0;   
+                };
+                if(downPress && playery + playerImg.height < canvas.height && !rightPress && !leftPress && !upPress) {
+                    playery += 1;
+                    playerRotation=180; 
+                };
+                
+            }
             
             function drawBox(){
                 ctx.beginPath();
@@ -98,20 +121,38 @@
                             case 0:
                                 break;
                             case 1:
+                                playerEnvCollision(bgX,bgY);
                                 ctx.beginPath();
                                 ctx.rect(bgX,bgY,75,75);
-                                ctx.fillStyle = "red";
+                                ctx.fillStyle = "gray";
                                 ctx.fill();
                                 ctx.closePath();
                                 ctx.moveTo(bgX,bgY);
                                 ctx.lineTo(bgX+75, bgY+75);
-                                ctx.strokeStyle = "yellow";
+                                ctx.strokeStyle = "black";
                                 ctx.stroke();
                                 ctx.moveTo(bgX,bgY+75);
                                 ctx.lineTo(bgX+75, bgY);
-                                ctx.strokeStyle = "yellow";
+                                ctx.strokeStyle = "black";
                                 ctx.stroke();
                                 break;
+                            case 2:
+                                ctx.beginPath();
+                                ctx.rect(bgX,bgY,75,75);
+                                ctx.fillStyle = "#e16666";
+                                ctx.fill();
+                                ctx.closePath();
+                                ctx.moveTo(bgX,bgY);
+                                ctx.lineTo(bgX+75, bgY+75);
+                                ctx.strokeStyle = "red";
+                                ctx.stroke();
+                                ctx.moveTo(bgX,bgY+75);
+                                ctx.lineTo(bgX+75, bgY);
+                                ctx.strokeStyle = "red";
+                                ctx.stroke();
+                                if(playerEnvCollision(bgX,bgY)){
+                                    death();
+                                }
                         }
                     }
                 }         
@@ -166,28 +207,16 @@
                 playerBoxCollision();
                 }
                 
-                //movement and colission with walls
-                if(leftPress && playerx>0) {
-                    playerx -= 2;
-                    playerRotation=270; 
-                };
-                if(rightPress && playerx + playerImg.width < canvas.width) {
-                    playerx += 2;
-                    playerRotation=90;   
-                };
-                if(upPress && playery > 0) {
-                    playery -= 2;
-                    playerRotation=0;   
-                };
-                if(downPress && playery + playerImg.height < canvas.height) {
-                    playery += 2;
-                    playerRotation=180; 
-                };
+                if(!deadHold) {
+                playerMvmt();
+                }
                 
                 drawPlayer(playerRotation);
                 
                 //placed before drawbox() since it corrects box position
-                boxGrab();
+                if(!winHold) {
+                    boxGrab();
+                }
                 
                 drawBox();
                 
@@ -198,7 +227,7 @@
  //----------           
             //this is here so i can change the level i start on easily
             //loadLevel(levelThree);
-            setInterval(draw,10);
+            setInterval(draw,5);
             
             document.addEventListener('keydown',keyDownChecker);
             document.addEventListener('keyup',keyUpChecker);
@@ -246,31 +275,57 @@
             function playerBoxCollision() {
                 collision = false;
                 
-                var playerWidth = playerImg.width;
-                var playerHeight = playerImg.height;
-                
-                if(playerx+playerWidth >= boxx && playery+playerHeight > boxy && playery < boxy+boxHeight) {
+                if(playerx+playerImg.width >= boxx && playery+playerImg.height > boxy && playery < boxy+boxHeight) {
                     if(!(playerx >= boxx+boxWidth)){
                         rightPress = false;
                         collision = true;
                     }
                 }
-                if(playerx <= boxx+boxWidth && playery < boxy+boxHeight && playery+playerHeight > boxy) {
-                    if(!(playerx+playerWidth <= boxx)) {
+                if(playerx <= boxx+boxWidth && playery < boxy+boxHeight && playery+playerImg.height > boxy) {
+                    if(!(playerx+playerImg.width <= boxx)) {
                         leftPress = false;
                         collision = true;
                     }
                 }
-                if(playery <= boxy+boxHeight && playerx < boxx+boxWidth && playerx+playerWidth > boxx) {
-                    if(!(playery+playerHeight <= boxy)) {
+                if(playery <= boxy+boxHeight && playerx < boxx+boxWidth && playerx+playerImg.width > boxx) {
+                    if(!(playery+playerImg.height <= boxy)) {
                         upPress = false;
                         collision = true;
                     }
                 }
-                if(playery+playerHeight >= boxy && playerx < boxx+boxHeight && playerx+playerWidth > boxx) {
+                if(playery+playerImg.height >= boxy && playerx < boxx+boxHeight && playerx+playerImg.width > boxx) {
                     if(!(playery >= boxy+boxHeight)) {
                         downPress = false;
                         collision = true;
+                    }
+                }
+            }
+            
+            function playerEnvCollision(objx,objy) {
+                envCollision = false;
+                
+                if(playerx+playerImg.width >= objx && playery+playerImg.height > objy && playery < objy+75) {
+                    if(!(playerx >= objx+75)){
+                        rightPress = false;
+                        return true;
+                    }
+                }
+                if(playerx <= objx+75 && playery < objy+75 && playery+playerImg.height > objy) {
+                    if(!(playerx+playerImg.width <= objx)) {
+                        leftPress = false;
+                        return true;
+                    }
+                }
+                if(playery <= objy+75 && playerx < objx+75 && playerx+playerImg.width > objx) {
+                    if(!(playery+playerImg.height <= objy)) {
+                        upPress = false;
+                        return true;
+                    }
+                }
+                if(playery+playerImg.height >= objy && playerx < objx+75 && playerx+playerImg.width > objx) {
+                    if(!(playery >= objy+75)) {
+                        downPress = false;
+                        return true;
                     }
                 }
             }
@@ -323,6 +378,7 @@
             function loadLevel(lvl) {
                 currentLvl = lvl
                 winHold = false;
+                deadHold = false;
                 //levelNumber[0] is level info: level name, playerx, playery, playerRotation, boxx, boxy, goalX, goalY, goalWidth, goalHeight, time, next level 
                 playerx = currentLvl[0][1];
                 playery = currentLvl[0][2];
@@ -350,10 +406,32 @@
                 }
                 if (winHold){
                     ctx.font = "20px Arial";
-                    ctx.fillStyle="black";
+                    ctx.fillStyle="green";
                     ctx.fillText("success",boxx-17,boxy-30);
                 }
             }
+            
+            function death() {
+                boxGrabbed = false;
+                
+                if (!dead && !deadHold) {
+                    dead = true;
+                    deadHold = true;
+                };
+                
+                if (dead) {
+                    dead=false;
+                    setTimeout(function() {loadLevel(currentLvl)}, 1000);
+                };
+
+                if (deadHold) {
+                    ctx.font = "25px Arial";
+                    ctx.fillStyle ='black';
+                    ctx.fillText("Ouch!",playerx-8,playery-30); 
+                };
+                
+            }
+            
         </script>
       
     </body>

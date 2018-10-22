@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8"/>
+        <title>canvas v4</title>
+        <link rel="icon" href="../Ico-zilla-icon.png">
+        <style>
+    	canvas { background: #eee; display: block; margin: 0 auto; }
+        </style>
+    </head>
+    <body>
+        Jules' Website | <a href="../index.html">Homepage</a> -> Box Grab <hr>
+       
+        <canvas id='myCanvas' width="825" height="600"></canvas> 
+ 
+        <script>
+            var canvas = document.getElementById('myCanvas');
+            var ctx = canvas.getContext('2d');
+            
+            var playerImg = new Image();
+            
+            var playerx = 387;
+            var playery = 390;
+            var playerRotation = 0;
+            
+            var boxWidth = 30;
+            var boxHeight = 30;
+            var boxx = 397;
+            var boxy = 285;
+            
+            var goalX = 380;
+            var goalY = 155;
+            var goalWidth = 65;
+            var goalHeight = 65;
+            
+            var spacePress = false;
+            var leftPress = false;
+            var rightPress = false;
+            var upPress = false;
+            var downPress = false;
+            
+            var envCollision = false;
+            var collision = false;
+            var boxGrabbed = false;
+            var win = false;
+            var winHold = false;
+            var dead = false;
+            var deadHold = false;
+            var inMenu = true;
+            var gameIsOver = false;
+            
+            var lives = 3;
+            
+            //levelNumber[0] is level info: level name, playerx, playery, playerRotation, boxx, boxy, goalX, goalY, goalWidth, goalHeight, time, next level 
+            var menu = [['menu',387,390,0,397,285,380,155,65,65,'time',"levelOne"],[0,0,0,0,1,1,1,0,0,0,0],[0,0,0,0,1,0,1,0,0,0,0],[0,0,0,0,1,0,1,0,0,0,0],[0,0,0,0,1,0,1,0,0,0,0],[0,0,0,0,1,0,1,0,0,0,0],[0,0,0,0,1,1,1,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0]];
+            
+            var levelOne = [['1',600,400,0,120,200,620,170,100,80,'time',"levelTwo"],[1,1,1,1,1,1,1,1,1,1,1],[1,0,0,2,0,2,0,0,0,0,1],[1,0,0,2,0,0,0,0,0,0,1],[1,0,0,0,0,2,0,0,0,0,1],[1,0,0,2,0,2,0,0,0,0,1],[1,0,0,2,0,2,0,0,0,0,1],[1,1,1,1,1,1,1,1,1,1,1]];
+            var levelTwo = [['2',650,430,0,100,175,85,310,80,205,'time',"levelThree"],[1,1,1,1,1,1,1,1,1,1,1],[1,0,0,0,0,0,0,0,0,0,1],[1,2,2,2,2,2,2,0,2,2,1],[1,0,0,0,0,0,0,0,0,0,1],[1,0,0,0,0,0,0,2,0,0,1],[1,0,0,0,0,0,0,2,0,0,1],[1,1,1,1,1,1,1,1,1,1,1]];
+            var levelThree = [['3',690,315,270,400,320,530,275,80,120,'time',"levelOne"],[1,1,1,1,1,1,1,1,1,1,1],[1,0,0,0,0,0,0,0,0,0,1],[1,0,2,2,2,2,2,0,0,0,1],[1,0,0,0,0,0,2,0,0,0,1],[1,0,2,2,2,2,2,0,0,0,1],[1,0,0,0,0,0,0,0,0,0,1],[1,1,1,1,1,1,1,1,1,1,1]];
+            
+            var gameOver = [['dead',-100,-100,0,-300,-100,-200,-100,65,65,'time',"menu"],[0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0]];
+            
+            var currentLvl = menu;
+            
+            const drawPlayer = (degree) => {
+                ctx.drawImage(playerImg,playerx,playery);
+                ctx.save();
+                ctx.translate(playerx+(playerImg.width/2),playery+(playerImg.height/2));
+                ctx.rotate(degree*Math.PI/180);
+                ctx.drawImage(playerImg,-(playerImg.width/2),-(playerImg.height/2));
+                ctx.restore();
+            }
+            playerImg.onload = drawPlayer(playerRotation);
+            playerImg.src = "player.png";
+            
+            function playerMvmt() {
+                if(leftPress && playerx>0 && !rightPress && !downPress && !upPress) {
+                    playerx -= 1;
+                    playerRotation=270; 
+                };
+                if(rightPress && playerx + playerImg.width < canvas.width && !leftPress && !downPress && !upPress) {
+                    playerx += 1;
+                    playerRotation=90;   
+                };
+                if(upPress && playery > 0 && !rightPress && !downPress && !leftPress) {
+                    playery -= 1;
+                    playerRotation=0;   
+                };
+                if(downPress && playery + playerImg.height < canvas.height && !rightPress && !leftPress && !upPress) {
+                    playery += 1;
+                    playerRotation=180; 
+                };
+                
+            }
+            
+            function drawBox(){
+                ctx.beginPath();
+                ctx.rect(boxx,boxy,boxHeight,boxHeight);
+                ctx.fillStyle = "blue";
+                ctx.fill();
+                ctx.closePath();
+                ctx.moveTo(boxx, boxy);
+                ctx.lineTo(boxx+boxWidth, boxy+boxHeight);
+                ctx.strokeStyle = "yellow";
+                ctx.stroke();
+                ctx.moveTo(boxx, boxy+boxHeight);
+                ctx.lineTo(boxx+boxWidth, boxy);
+                ctx.strokeStyle = 'yellow';
+                ctx.stroke();
+            }
+            
+            function drawGoal() {
+                for(var i=0;i<2;i++) {    
+                    ctx.beginPath();
+                    ctx.rect(goalX, goalY, goalWidth, goalHeight);
+                    ctx.strokeStyle='green';
+                    ctx.stroke();
+                    ctx.closePath();
+                }
+            }
+            
+            function drawBackground(lvl) {
+                
+                for(var r=1; r < lvl.length; r++) {
+                    var bgY = r*75;
+                    for(var c=0; c < lvl[r].length; c++){
+                        var bgX = c*75;
+                        switch(lvl[r][c]) {
+                            case 0:
+                                break;
+                            case 1:
+                                playerEnvCollision(bgX,bgY);
+                                ctx.beginPath();
+                                ctx.rect(bgX,bgY,75,75);
+                                ctx.fillStyle = "gray";
+                                ctx.fill();
+                                ctx.closePath();
+                                ctx.moveTo(bgX,bgY);
+                                ctx.lineTo(bgX+75, bgY+75);
+                                ctx.strokeStyle = "black";
+                                ctx.stroke();
+                                ctx.moveTo(bgX,bgY+75);
+                                ctx.lineTo(bgX+75, bgY);
+                                ctx.strokeStyle = "black";
+                                ctx.stroke();
+                                break;
+                            case 2:
+                                ctx.beginPath();
+                                ctx.rect(bgX,bgY,75,75);
+                                ctx.fillStyle = "#e16666";
+                                ctx.fill();
+                                ctx.closePath();
+                                ctx.moveTo(bgX,bgY);
+                                ctx.lineTo(bgX+75, bgY+75);
+                                ctx.strokeStyle = "red";
+                                ctx.stroke();
+                                ctx.moveTo(bgX,bgY+75);
+                                ctx.lineTo(bgX+75, bgY);
+                                ctx.strokeStyle = "red";
+                                ctx.stroke();
+                                if(playerEnvCollision(bgX,bgY) && !winHold){
+                                    death();
+                                }
+                        }
+                    }
+                }         
+            }
+            
+            function drawHUD() {
+                ctx.beginPath();
+                ctx.rect(0,0,canvas.width,75);
+                ctx.fillStyle = "#ffcc66";
+                ctx.fill();
+                for(i=0;i<2;i++){
+                    ctx.beginPath();
+                    ctx.rect(1,1,canvas.width-2,74);
+                    ctx.strokeStyle='black';
+                    ctx.stroke();
+                    ctx.closePath();
+                }
+                
+                ctx.font = "30px Arial";
+                ctx.fillStyle ='black';
+                ctx.fillText("Level "+currentLvl[0][0],10,45);
+                ctx.font = "20px Arial";
+                ctx.fillText("Time: ",180,25);
+                ctx.fillText("Score: ",180,55);
+                ctx.fillText("Lives: "+lives,330,25);
+                //ctx.fillText("Hi-score: ",330,55);
+            }
+            
+            function debugText() {
+                ctx.font = "10px Arial";
+                ctx.fillText("space press " + spacePress,10,10);
+                ctx.fillText("left press " +leftPress,10,25);
+                ctx.fillText("up press " +upPress,10,40);
+                ctx.fillText("right press " +rightPress,10,55);
+                ctx.fillText("down press " +downPress,10,70);
+                ctx.fillText("collision " +collision,10,85);
+                ctx.fillText("box grab " +boxGrabbed,10,100);
+                ctx.fillText("rotation " +playerRotation,10,115);
+            }
+ //--------           
+            function draw() {
+                ctx.clearRect(0,0,canvas.width,canvas.height);
+
+                //placed first so it has things drawn over it.
+                drawGoal();
+
+                drawBackground(currentLvl);
+                
+                if (!inMenu) {
+                    drawHUD();
+                }
+                
+                if (!boxGrabbed) {
+                    playerBoxCollision();
+                }
+
+                if(!deadHold) {
+                    playerMvmt();
+                }
+
+                drawPlayer(playerRotation);
+
+                //placed before drawbox() since it corrects box position
+                if(!winHold) {
+                    boxGrab();
+                }
+
+                drawBox();
+
+                if(inMenu){
+                    startGame();
+                } else {
+                    winCondition();
+                };
+                
+                if(gameIsOver){
+                    endGame();
+                }
+
+                //debugText();
+                }
+            setInterval(draw,5);
+            
+ //----------           
+            
+            
+            document.addEventListener('keydown',keyDownChecker);
+            document.addEventListener('keyup',keyUpChecker);
+            
+            function keyDownChecker(key) {
+                switch(key.keyCode){
+                    case 32:
+                        spacePress = true;
+                        return;
+                    case 37:
+                        leftPress = true;
+                        return;
+                    case 38:
+                        upPress = true;
+                        return;
+                    case 39:
+                        rightPress = true;
+                        return;
+                    case 40:
+                        downPress = true;
+                        return;      
+                }  
+            }
+            
+            function keyUpChecker(key) {
+                switch(key.keyCode) {
+                    case 32:
+                        spacePress = false;
+                        return;
+                    case 37:
+                        leftPress = false;
+                        return;
+                    case 38:
+                        upPress = false;
+                        return;
+                    case 39:
+                        rightPress = false;
+                        return;
+                    case 40:
+                        downPress = false;
+                        return;
+                }
+            }
+            
+            function playerBoxCollision() {
+                collision = false;
+                
+                if(playerx+playerImg.width >= boxx && playery+playerImg.height > boxy && playery < boxy+boxHeight) {
+                    if(!(playerx >= boxx+boxWidth)){
+                        rightPress = false;
+                        collision = true;
+                    }
+                }
+                if(playerx <= boxx+boxWidth && playery < boxy+boxHeight && playery+playerImg.height > boxy) {
+                    if(!(playerx+playerImg.width <= boxx)) {
+                        leftPress = false;
+                        collision = true;
+                    }
+                }
+                if(playery <= boxy+boxHeight && playerx < boxx+boxWidth && playerx+playerImg.width > boxx) {
+                    if(!(playery+playerImg.height <= boxy)) {
+                        upPress = false;
+                        collision = true;
+                    }
+                }
+                if(playery+playerImg.height >= boxy && playerx < boxx+boxHeight && playerx+playerImg.width > boxx) {
+                    if(!(playery >= boxy+boxHeight)) {
+                        downPress = false;
+                        collision = true;
+                    }
+                }
+            }
+            
+            function playerEnvCollision(objx,objy) {
+                envCollision = false;
+                
+                if(playerx+playerImg.width >= objx && playery+playerImg.height > objy && playery < objy+75) {
+                    if(!(playerx >= objx+75)){
+                        rightPress = false;
+                        return true;
+                    }
+                }
+                if(playerx <= objx+75 && playery < objy+75 && playery+playerImg.height > objy) {
+                    if(!(playerx+playerImg.width <= objx)) {
+                        leftPress = false;
+                        return true;
+                    }
+                }
+                if(playery <= objy+75 && playerx < objx+75 && playerx+playerImg.width > objx) {
+                    if(!(playery+playerImg.height <= objy)) {
+                        upPress = false;
+                        return true;
+                    }
+                }
+                if(playery+playerImg.height >= objy && playerx < objx+75 && playerx+playerImg.width > objx) {
+                    if(!(playery >= objy+75)) {
+                        downPress = false;
+                        return true;
+                    }
+                }
+            }
+            
+            function boxGrab() {
+                if(!boxGrabbed && collision && spacePress) {
+                    spacePress = false;
+                    boxGrabbed = true;
+                }
+                if(boxGrabbed) {
+                    switch(playerRotation) {
+                        case 0:
+                            boxx = (playerx+(playerImg.width/2)-(boxWidth/2));
+                            boxy = (playery-boxHeight/2);
+                            break;
+                        case 90:
+                            boxx = (playerx + playerImg.width - (boxWidth/2));
+                            boxy = (playery + playerImg.height/2 - boxHeight/2);
+                            break;
+                        case 180:
+                            boxx = (playerx+(playerImg.width/2)-(boxWidth/2));
+                            boxy = (playery+playerImg.height-boxHeight/2);
+                            break;
+                        case 270:
+                            boxx = (playerx - (boxWidth/2));
+                            boxy = (playery + playerImg.height/2 - boxHeight/2);
+                            break;
+                    }
+                }
+                if(boxGrabbed && spacePress) {
+                    spacePress = false;
+                    boxGrabbed = false;
+                    switch(playerRotation) {
+                        case 0:
+                            boxy=playery-boxHeight;
+                            break;
+                        case 90:
+                            boxx=playerx+playerImg.width;
+                            break;
+                        case 180:
+                            boxy=playery+playerImg.height;
+                            break;
+                        case 270:
+                            boxx=playerx-boxWidth;
+                            break;
+                    }
+                }
+            }
+
+            function loadLevel(lvl) {
+                currentLvl = lvl
+                winHold = false;
+                deadHold = false;
+                //levelNumber[0] is level info: level name, playerx, playery, playerRotation, boxx, boxy, goalX, goalY, goalWidth, goalHeight, time, next level 
+                playerx = currentLvl[0][1];
+                playery = currentLvl[0][2];
+                playerRotation = currentLvl[0][3];
+            
+                boxx = currentLvl[0][4];
+                boxy = currentLvl[0][5];
+            
+                goalX = currentLvl[0][6];
+                goalY = currentLvl[0][7];
+                goalWidth = currentLvl[0][8];
+                goalHeight = currentLvl[0][9];
+                
+            }
+            
+            function startGame() {
+               if(!boxGrabbed && (boxx+boxWidth/2 > goalX) && (boxx+boxWidth/2 < goalX+goalWidth) && (boxy+boxHeight/2 > goalY) && (boxy < goalY+goalHeight) && !win && !winHold) {
+                    win = true;
+                    winHold = true;
+                }
+                if (win) {
+                    win = false;
+                    var newLevel = window[currentLvl[0][11]];
+                    setTimeout(function() {loadLevel(newLevel);inMenu=false}, 2000);
+                }
+                if (winHold){
+                    ctx.font = "20px Arial";
+                    ctx.fillStyle="White";
+                    ctx.fillText("Have fun!",boxx-26,boxy-40);
+                }
+            } 
+            
+            function endGame() {
+                deadHold = false;
+                
+                ctx.font = "30px Arial";
+                ctx.fillStyle ='black';
+                ctx.fillText("Game Over!",370,200);
+                ctx.font = "20px Arial";
+                ctx.fillText("Final Score: ",canvas.width/2-60,250);
+                ctx.fillText("Press Space to Restart Game",canvas.width/2-90,270);
+                
+                if(spacePress){
+                    spacePress=false;
+                    loadLevel(menu);
+                    lives=3;
+                    gameIsOver=false;
+                };
+                
+            }
+            
+            function winCondition(){
+                if(!boxGrabbed && (boxx+boxWidth/2 > goalX) && (boxx+boxWidth/2 < goalX+goalWidth) && (boxy+boxHeight/2 > goalY) && (boxy < goalY+goalHeight) && !win && !winHold) {
+                    win = true;
+                    winHold = true;
+                }
+                if (win) {
+                    win = false;
+                    var newLevel = window[currentLvl[0][11]];
+                    setTimeout(function() {loadLevel(newLevel)}, 2000);
+                }
+                if (winHold){
+                    ctx.font = "20px Arial";
+                    ctx.fillStyle="green";
+                    ctx.fillText("success",boxx-17,boxy-30);
+                }
+            }
+            
+            function death() {
+                boxGrabbed = false;
+                
+                if (!dead && !deadHold) {
+                    dead = true;
+                    deadHold = true;
+                };
+                
+                if (dead) {
+                    dead=false;
+                    lives -= 1;
+                    if(lives === 0){
+                        setTimeout(function() {loadLevel(gameOver);inMenu=true;gameIsOver=true},3000);
+                    } else {
+                        setTimeout(function() {loadLevel(currentLvl)}, 1000);
+                    }
+                };
+
+                if (deadHold) {
+                    ctx.font = "25px Arial";
+                    ctx.fillStyle ='black';
+                    if(lives === 0){
+                        ctx.fillText("Game Over!",playerx-43,playery-20); 
+                    }else{
+                        ctx.fillText("Ouch!",playerx-8,playery-20); 
+                    }
+                };
+                
+            }
+            
+        </script>
+        
+    </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

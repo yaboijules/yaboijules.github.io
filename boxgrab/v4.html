@@ -19,16 +19,16 @@
             
             var playerImg = new Image();
             
-            var playerx = 387;
+            var playerx = 462;
             var playery = 390;
             var playerRotation = 0;
             
             var boxWidth = 30;
             var boxHeight = 30;
-            var boxx = 397;
+            var boxx = 472;
             var boxy = 285;
             
-            var goalX = 380;
+            var goalX = 455;
             var goalY = 155;
             var goalWidth = 65;
             var goalHeight = 65;
@@ -52,7 +52,7 @@
             var lives = 3;
             
             //levelNumber[0] is level info: level name, playerx, playery, playerRotation, boxx, boxy, goalX, goalY, goalWidth, goalHeight, time, next level 
-            var menu = [['menu',387,390,0,397,285,380,155,65,65,'time',"levelOne"],[0,0,0,0,1,1,1,0,0,0,0],[0,0,0,0,1,0,1,0,0,0,0],[0,0,0,0,1,0,1,0,0,0,0],[0,0,0,0,1,0,1,0,0,0,0],[0,0,0,0,1,0,1,0,0,0,0],[0,0,0,0,1,1,1,0,0,0,0],[0,0,0,0,0,0,0,0,0,0,0]];
+            var menu = [['menu',462,390,0,472,285,455,155,65,65,'time',"levelOne"],[0,0,0,0,0,1,1,1,0,0,0],[0,0,0,0,0,1,0,1,0,0,0],[0,0,0,0,0,1,0,1,0,0,0],[0,0,0,0,0,1,0,1,0,0,0],[0,0,0,0,0,1,0,1,0,0,0],[0,0,0,0,0,1,1,1,0,0,0],[0,0,0,0,0,0,0,0,0,0,0]];
             
             var levelOne = [['1',600,400,0,120,200,620,170,100,80,'time',"levelTwo"],[1,1,1,1,1,1,1,1,1,1,1],[1,0,0,2,0,2,0,0,0,0,1],[1,0,0,2,0,0,0,0,0,0,1],[1,0,0,0,0,2,0,0,0,0,1],[1,0,0,2,0,2,0,0,0,0,1],[1,0,0,2,0,2,0,0,0,0,1],[1,1,1,1,1,1,1,1,1,1,1]];
             var levelTwo = [['2',650,430,0,100,175,85,310,80,205,'time',"levelThree"],[1,1,1,1,1,1,1,1,1,1,1],[1,0,0,0,0,0,0,0,0,0,1],[1,2,2,2,2,2,2,0,2,2,1],[1,0,0,0,0,0,0,0,0,0,1],[1,0,0,0,0,0,0,2,0,0,1],[1,0,0,0,0,0,0,2,0,0,1],[1,1,1,1,1,1,1,1,1,1,1]];
@@ -200,6 +200,26 @@
                 ctx.fillText("box grab " +boxGrabbed,10,100);
                 ctx.fillText("rotation " +playerRotation,10,115);
             }
+            
+            function drawInst() {
+                ctx.font = "50px Arial";
+                ctx.fillStyle ='black';
+                ctx.fillText("Box Grab",40,80);
+                 ctx.font = "20px Arial";
+                ctx.fillText("the game",70,110);
+                ctx.font = "35px Arial";
+                ctx.fillText("<=====",620,190);
+                ctx.fillText("Instructions:",40,170);
+                ctx.font = "20px Arial";
+                ctx.fillText("Move with the arrow keys",70,200);
+                ctx.fillText("Pick up the blue box with space",70,230);
+                ctx.fillText("Place blue box in green square",70,260);
+                ctx.fillText("Don't die to evil blocks",70,290);
+                ctx.font = "15px Arial";
+                ctx.fillText("Place box in goal to start game",610,220);
+                ctx.fillText("v4",800,590);
+            }
+            
  //--------           
             function draw() {
                 ctx.clearRect(0,0,canvas.width,canvas.height);
@@ -208,6 +228,10 @@
                 drawGoal();
 
                 drawBackground(currentLvl);
+                if(inMenu) {
+                    drawInst();
+                }
+                
                 
                 if (!inMenu) {
                     drawHUD();

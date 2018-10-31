@@ -1,0 +1,90 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Pizza Order</title>
+    <link rel='stylesheet' type='text/css' href='assignment7pizza.css'>
+    <script src='assignment7pizza.js'></script>
+    <style>
+    /*I added my css script externally, but I realised I was supposed to do it interally. Oops! I know this is how your add a style script internally  */
+    </style>
+</head>
+    
+<body>
+    <div id="header">
+        <h1>Beep Boop Pizza</h1>
+        <img src="pizza.jpeg" alt="Our Pizza Is Delicious" height="100" width="100">
+        <h2>Best pizza either side of the Mississippi!</h2>
+        <hr>
+    </div>
+    <div id="main_content">
+        <form>
+        <h3>Order:</h3>
+        <p>Size <select id="size">
+                <option>Select Size</option>
+                <option value="6">Personal($6)</option>
+                <option value="9">Medium($9)</option>
+                <option value="12">Large($12)</option>
+                <option value='16'>Extra Large($16)</option>
+            
+        </select></p>
+        <p>Toppings:</p>
+        <p><input type="checkbox" name= "toppings" id="mushrooms"> Mushrooms 
+            <input type="checkbox" name= "toppings" id="artichoke"> Artichoke
+            <input type="checkbox" name= "toppings" id="red_peppers"> Red Peppers</p>
+        <p><input type="checkbox" name= "toppings" id="olives"> Olives 
+            <input type="checkbox" name= "toppings" id="red_onions"> Red Onions
+            <input type="checkbox" name= "toppings" id="roasted_garlic"> Roasted Garlic</p>
+        <p><input type="checkbox" name= "toppings" id="sausage"> Sausage 
+            <input type="checkbox" name= "toppings" id="pepperoni"> Pepperoni
+            <input type="checkbox" name= "toppings" id="bbq_chicken"> BBQ Chicken</p>
+        <p><input type="checkbox" name= "toppings" id="shrimp"> Shrimp
+            <input type="checkbox" name= "toppings" id="anchovies"> Anchovies
+            <input type="checkbox" name= "toppings" id="prosciutto"> Prosciutto</p>
+            
+        <p>Special Requests:</p>
+        <p><textarea id="comments" cols="30" rows="5"></textarea></p>
+            
+        <p>Drinks: <select id='drink'>
+            <option value='0'>0</option>
+            <option value='1'>1</option>
+            <option value='2'>2</option>
+            <option value='3'>3</option>
+            <option value='4'>4</option>
+            </select></p>
+            
+        <p>Deserts: <select id='desert'>
+            <option value='0'>0</option>
+            <option value='1'>1</option>
+            <option value='2'>2</option>
+            <option value='3'>3</option>
+            <option value='4'>4</option>
+            </select></p>
+            
+        <br>
+        <h3>Personal Info:</h3>
+        <p>First Name <input type="text" id="first_name" required> </p>
+        <p>Last Name <input type="text" id="last_name" required> </p>
+        <p>Phone <input type="text" id="phone_num" required> </p>
+        <p>Email <input type="text" id="email" required> </p>
+        <p>Would you like to be added to our email list?</p>
+        <p><input type="radio" name="ad_list" value="yes" checked> Yes /<input type="radio" name="ad_list" value="no"> No</p>
+           
+        <br>
+        <h3>Delivery Information:</h3>
+        <p>Address: <input type='text' id='address'></p>
+        <p><input type="button" value="Submit my Order!" onClick="sendOrder()"> <input type="reset" value="Restart Order"></p>
+        </form><br>
+        
+        <p id='orderconf'>Waiting for submission.</p>
+        
+        <hr>
+    </div>
+    <div id="footer">
+        <h6>Address: 43 Flower Ave, Hoboken, NJ</h6>
+        <h6>Phone Number: 123-456-7890</h6>
+    </div> 
+</body>
+
+</html>

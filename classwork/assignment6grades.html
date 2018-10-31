@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>grades</title>
+        <script>
+            function grade() {
+                var homework = Number(document.getElementById('homework').value);
+                var midterm = Number(document.getElementById('midterm').value);
+                var final = Number(document.getElementById('final').value);
+                
+                if(homework == NaN || midterm == NaN || final == NaN) {
+                    alert('Please only enter numbers!');
+                    return;
+                }
+                
+                var grade = (homework/200*50)+(midterm/100*20)+(final/100*30);
+                document.getElementById('finalgrade').innerHTML = grade;
+            }
+        
+        </script>
+    </head>
+    
+    <body>
+        <p>Total Homework Score/200: <input type='text' id='homework'></p>
+        <p>Midterm Score/100: <input type='text' id='midterm'></p>
+        <p>Final Score/100: <input type='text' id='final'></p>
+        <input type='button' value='calculate grade' onclick='grade()'>
+        <p>Your final grade is: <span id='finalgrade'></span></p>
+    </body>
+</html>

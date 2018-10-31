@@ -1,0 +1,88 @@
+<!-- css means CASCADING style sheets. the priority starts with inline style, followed by interal styles, followed by external styles, followed by default browerser styles -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>css fun</title>
+        <style>
+            /*.exmp sets style for elements with class='exmp'
+            #exmp sets style for elements with id='exmp' */
+            
+            #header {
+                color:aqua;
+                background-color:aliceblue;
+                text-align: center;
+                margin: auto;
+                width: 80%;
+                padding:3px;
+                padding-bottom:50px;
+                padding-top:50px;
+                margin-bottom:5px;
+            }
+            nav {
+                background-color:aliceblue;
+                color:gainsboro;
+                padding:3px;
+                width:80%;
+                margin:auto;
+            }
+            #main_content {
+                background-color:antiquewhite;
+                color:dimgray;
+                padding:3px;
+                margin:auto;
+                margin-top:5px;
+                margin-bottom:5px;
+                width:80%;
+                min-height: 500px;
+            }
+            #footer {
+                background-color: aliceblue;
+                color:gainsboro;
+                padding:3px;
+                width:80%;
+                margin:auto;
+                margin-bottom:5px;
+                text-align: center;
+            }
+            .buttonStyle {
+                background-color:aliceblue;
+                border:0;
+                padding:5px;
+            }
+            
+        </style>
+        <script>
+        function addContent() {
+            var pTag = document.createElement("P");
+            var text = document.createTextNode("more content!");
+            pTag.appendChild(text);
+            document.getElementById('main_content').appendChild(pTag);
+            
+        }
+        
+        </script>
+    </head>
+    <body>
+        <div id='header'>
+            <p>this is my header</p>
+        </div>
+        <nav>
+            Menu:
+            <a>link 1</a>
+            <a>link 2</a>
+            <a>link 3</a>
+        </nav>
+        <div id='main_content'>
+            <p>main content</p>
+            <p>this section has a min-height and will grow with more content being placed in it.</p>
+            <p>press to add more content 
+            <input type='button' class='buttonStyle' value='add content' onclick='addContent()'></p>
+        </div>
+        <div id='footer'>
+            <p>this is my footer</p>
+        </div>  
+    </body>
+</html>

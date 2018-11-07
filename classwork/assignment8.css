@@ -1,0 +1,25 @@
+form {
+    width:300px;
+    border:2px solid red;
+    border-radius:10px;
+    padding:3px;
+    background-color:#ffcccc;
+}
+
+#header {
+    color:#0000ff;
+    text-align:center;
+}
+
+body {
+    background-color:#f0f8ff;
+}
+
+#footer {
+    background-color:#42f4ce;
+    border: 2px solid #008000;
+    padding:3px;
+    font-family:"Arial";
+    font-style:italic;
+}
+

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" type="text/css" href="busline.css">
+        <title>WCD Reservation</title>
+        <script src='busline.js'></script>
+    </head>
+
+    <body>
+        <div id='header'>
+            <h1>Windy City Departures</h1>
+        </div>
+            <img src='chicagohr.jpg'>
+        <nav>
+            <a href='busline_home.htm'>Home</a>
+            <a href='busline_reservation.htm'>Book your trip!</a>
+            <a href='busline_contact.htm'>Contact Us!</a>
+            <a href='busline_mailing.htm'>Join our mailing list!</a>
+        </nav>
+        <div id='content'>
+            <form name='reservation'>
+                <h3>Make your reservation:</h3>
+                <input type='text' placeholder='First Name' id='firstname'>
+                <input type='text' placeholder='Last Name' id='lastname'>
+                <p>Arrival City:</p>
+                <input type='radio' name='arrival' value='40' checked>St. Louis ($40)<br>
+                <input type='radio' name='arrival' value='20'>Milwaukee ($20)<br>
+                <input type='radio' name='arrival' value='35'>Detroit ($35)<br>
+                <p>Hotel:</p>
+                <input type='radio' name='hotel' value='50' checked>Economy ($50/day)<br>
+                <input type='radio' name='hotel' value='70'>Standard ($70/day)<br>
+                <input type='radio' name='hotel' value='120'>Upscale ($120/day)<br>
+                <p>Number of Travelers:</p>
+                <select id='people'>
+                    <option value='1'>1</option>
+                    <option value='2'>2</option>
+                    <option value='3'>3</option>
+                    <option value='4'>4</option>
+                    <option value='5'>5</option>
+                    <option value='6'>6</option>
+                </select>
+                <p>Number of Days:</p>
+                <select id='days'>
+                    <option value='2'>2</option>
+                    <option value='3'>3</option>
+                    <option value='4'>4</option>
+                    <option value='5'>5</option>
+                    <option value='6'>6</option>
+                    <option value='7'>7</option>
+                </select>
+                <p>Extras:</p>
+                <input type='checkbox' id='wifi'>Wifi ($10)<br>
+                <input type='checkbox' id='recline'>Fully-Reclining Seat ($20)<br>
+                <p>Meal Choice:</p>
+                <input type='radio' name='food' value='0' checked>None<br>
+                <input type='radio' name='food' value='5'>Snack ($5)<br>
+                <input type='radio' name='food' value='10'>Full Meal ($10)<br>
+                <p>Special Requests:</p>
+                <textarea cols='25' rows='4'></textarea><br>
+                <input type='button' value='Book My Trip' onclick='bookTrip()'>
+            </form>
+            <p id='total'></p>
+        </div>
+        <div id='footer'>
+            <p>&#9742;:756-609-4721 </p>
+            <p>&#128205;:10 West Michigan Ave, Chicago, IL 60601</p>
+        </div>
+    </body>
+</html>

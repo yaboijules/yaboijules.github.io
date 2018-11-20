@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>IT-130 Exam</title>
+	<script type="text/javascript">
+		
+		function calcTip() {
+            var meal = Number(document.getElementById('txtMealCost').value)
+            if(!meal){
+                alert('Please enter a meal value.');
+                return;
+            }
+            var tipPer
+            if (document.getElementById('great').checked){
+                tipPer = .20;
+            } else if (document.getElementById('okay').checked){
+                tipPer = .15;
+            } else if (document.getElementById('poor').checked){
+                tipPer = .10;
+            }
+            var tip = meal * tipPer
+            document.getElementById('output').innerHTML = "You should tip $"+tip+" for a total of $"+(tip+meal)+".";
+        }
+					
+	</script>
+</head>
+<body>
+  <h1>Common Question, Fall 2018</h1>
+  <hr>
+  What was the cost of your meal? 
+  <input type="text" id="txtMealCost" />
+  <hr>
+  How would you rate the service?<br>
+  Great (20%) <input type="radio" 	name="radServiceQuality" id="great" checked> <br>
+  Okay (15%) <input type="radio" 	name="radServiceQuality" id="okay"> <br>
+  Poor (10%) <input type="radio" 	name="radServiceQuality" id="poor"> <br>
+	
+  <p><input type="button" value="Calculate Tip Amount" 
+            onclick="calcTip()" >
+	
+  <div id="output">
+  </div>
+</body>
+</html>

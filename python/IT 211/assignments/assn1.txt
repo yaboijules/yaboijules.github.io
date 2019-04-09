@@ -1,0 +1,116 @@
+Julian Rymar - Assignment 1 - IT 211
+
+1. A statement, possibly very brief, that summarizes your completion of the assignment
+2. The text of your interactive Python exercises
+3. The answers to the questions
+4. For each of your Python scripts:
+    1. A listing of the script (copy the code in the py file and past it in the assn1.txt file)
+    2. Running examples that demonstrate that your script works correctly (copy the text that shows your py file running and paste it in the assn1.txt file)
+=================================================
+1.  Didn't take me too long, under 30 minutes for sure. Didn't have any big errors compeleting the assignment.
+
+=================================================
+2.
+
+1) IDLE exercises:
+    >>> 10/3
+    3.3333333333333335
+    >>> 10//3
+    3
+    >>> 10%3
+    1
+    >>> list1 = ['cat','dog','emu']
+    >>> list2 = ['asp','bat','owl']
+    >>> len(list1)
+    3
+    >>> list1 + list2
+    ['cat', 'dog', 'emu', 'asp', 'bat', 'owl']
+    >>> list3 = [23,45,10]
+    >>> sum(list3)
+    78
+
+
+2) Hiking distances:
+    >>> distances = [12,23,18]
+    >>> sum(distances)/len(distances)
+    17.666666666666668
+
+=================================================
+3.
+
+1)  / is straight up division, resulting in an int or float
+    // divides and rounds down the result to the next int, similar to floor() in other languages
+    % gives you the remainder after dividing
+
+2)  You can't concatenate a string with a number, it results in a TypeError. In this case, you must convert the number to a string using str()
+
+3)  int('10') gives you an integer, 10, while float('10') gives you a float point value, which would be 10.0 in this case. The value stays the same, but it adds a decimal.
+
+=================================================
+4.
+
+1.1) The code:
+
+    value1 = eval(input("Enter a number: "))
+    value2 = eval(input("Enter another number: "))
+    value3 = eval(input("Enter one more number: "))
+
+    list = [value1,value2,value3]
+    average = str(sum(list) / len(list))
+    print("The average of the three numbers is " + average +".")
+
+1.2) The output in IDLE:
+    
+    =============== RESTART: C:/Users/JPRYMAR/Downloads/assn1-1.py ===============
+    Enter a number: 2
+    Enter another number: 4
+    Enter one more number: 12
+    The average of the three numbers is 6.0.
+    >>> 
+    =============== RESTART: C:/Users/JPRYMAR/Downloads/assn1-1.py ===============
+    Enter a number: 1
+    Enter another number: 2
+    Enter one more number: 3
+    The average of the three numbers is 2.0.
+    >>> 
+    =============== RESTART: C:/Users/JPRYMAR/Downloads/assn1-1.py ===============
+    Enter a number: 123
+    Enter another number: 53
+    Enter one more number: 1023
+    The average of the three numbers is 399.6666666666667.
+    >>> 
+    =============== RESTART: C:/Users/JPRYMAR/Downloads/assn1-1.py ===============
+    Enter a number: -2
+    Enter another number: 12
+    Enter one more number: -20
+    The average of the three numbers is -3.3333333333333335.
+
+2.1) The code:
+
+    adj = input("Choose an adjective: ")
+    noun = input("Choose a noun: ")
+    name = input("Choose a name: ")
+
+    message = "The " + adj + " " + noun + " was named " + name + "."
+    print(message)
+
+
+2.2) The output in IDLE:
+    
+    ========= RESTART: C:/Users/JPRYMAR/Desktop/python/IT 211/assn1-2.py =========
+    Choose an adjective: smelly
+    Choose a noun: sock
+    Choose a name: joey
+    The smelly sock was named joey.
+    >>> 
+    ========= RESTART: C:/Users/JPRYMAR/Desktop/python/IT 211/assn1-2.py =========
+    Choose an adjective: tall
+    Choose a noun: desk
+    Choose a name: macy
+    The tall desk was named macy.
+    >>> 
+    ========= RESTART: C:/Users/JPRYMAR/Desktop/python/IT 211/assn1-2.py =========
+    Choose an adjective: strong
+    Choose a noun: pickle
+    Choose a name: maeve
+    The strong pickle was named maeve.

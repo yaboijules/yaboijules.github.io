@@ -1,0 +1,117 @@
+Julian Rymar - assignment 2
+IT 211
+==============================================
+1.
+    No issues, just wrote the scripts. I intially was going to generate a random integer to get the
+    noun from the list in problem 1, but random.choice() seemed simpler.
+
+==============================================
+2.
+    a) the script:
+
+    import random
+
+    noun = input('Enter a noun: ')
+    adjective = input('Enter an adjective: ')
+    noun_list = ['house','car','tunnel','castle','field']
+    print('The ' + adjective + ' ' + noun + ' is in the ' + random.choice(noun_list) + '.')
+
+
+    b) examples:
+    
+    Enter a noun: horse
+    Enter an adjective: fat
+    The fat horse is in the tunnel.
+
+    Enter a noun: boat
+    Enter an adjective: wet
+    The wet boat is in the tunnel.
+
+    Enter a noun: car
+    Enter an adjective: fast
+    The fast car is in the house.
+
+
+2.
+    a) script:
+        
+    credits = eval(input("How many credits will you be taking next quarter? "))
+    if credits > 19:
+        tuition = 12803 + (credits-18)*615
+    elif credits <= 18 and credits >= 12:
+        tuition = 12803
+    elif credits < 12 and credits > 0:
+        tuition = credits * 615
+
+    if credits == 0:
+        print('you dont even go to school here')
+    else:
+        print('Your tuition is $' + str(tuition) + '.')
+
+
+    b) examples:
+        
+    ========= RESTART: C:/Users/JPRYMAR/Desktop/python/IT 211/assn2-2.py =========
+    How many credits will you be taking next quarter? 24
+    Your tuition is $16493.
+    >>> 
+    ========= RESTART: C:/Users/JPRYMAR/Desktop/python/IT 211/assn2-2.py =========
+    How many credits will you be taking next quarter? 2
+    Your tuition is $1230.
+    >>> 
+    ========= RESTART: C:/Users/JPRYMAR/Desktop/python/IT 211/assn2-2.py =========
+    How many credits will you be taking next quarter? 14
+    Your tuition is $12803.
+    >>> 
+    ========= RESTART: C:/Users/JPRYMAR/Desktop/python/IT 211/assn2-2.py =========
+    How many credits will you be taking next quarter? 17
+    Your tuition is $12803.
+    >>> 
+    ========= RESTART: C:/Users/JPRYMAR/Desktop/python/IT 211/assn2-2.py =========
+    How many credits will you be taking next quarter? 0
+    you dont even go to school here
+
+
+3.
+    a) script:
+        
+    list = ['crying','singing','sleeping','eating','dying','decomposing']
+    for i in range(3):
+        print('Kum bay ya, my Lord, kum bay ya,')
+    print('O Lord, kum bay ya.')
+    for x in list:
+        for i in range(3):
+            print("Someone's "+x+", my Lord, kum bay ya;")
+        print('O Lord, kum bay ya.')
+
+    b) example:
+        
+    ========= RESTART: C:/Users/JPRYMAR/Desktop/python/IT 211/assn2-3.py =========
+    Kum bay ya, my Lord, kum bay ya,
+    Kum bay ya, my Lord, kum bay ya,
+    Kum bay ya, my Lord, kum bay ya,
+    O Lord, kum bay ya.
+    Someone's crying, my Lord, kum bay ya;
+    Someone's crying, my Lord, kum bay ya;
+    Someone's crying, my Lord, kum bay ya;
+    O Lord, kum bay ya.
+    Someone's singing, my Lord, kum bay ya;
+    Someone's singing, my Lord, kum bay ya;
+    Someone's singing, my Lord, kum bay ya;
+    O Lord, kum bay ya.
+    Someone's sleeping, my Lord, kum bay ya;
+    Someone's sleeping, my Lord, kum bay ya;
+    Someone's sleeping, my Lord, kum bay ya;
+    O Lord, kum bay ya.
+    Someone's eating, my Lord, kum bay ya;
+    Someone's eating, my Lord, kum bay ya;
+    Someone's eating, my Lord, kum bay ya;
+    O Lord, kum bay ya.
+    Someone's dying, my Lord, kum bay ya;
+    Someone's dying, my Lord, kum bay ya;
+    Someone's dying, my Lord, kum bay ya;
+    O Lord, kum bay ya.
+    Someone's decomposing, my Lord, kum bay ya;
+    Someone's decomposing, my Lord, kum bay ya;
+    Someone's decomposing, my Lord, kum bay ya;
+    O Lord, kum bay ya.
